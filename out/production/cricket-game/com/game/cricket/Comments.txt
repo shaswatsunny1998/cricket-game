@@ -1,0 +1,27 @@
+/*
+    public static int getCurrBallRun() {
+        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, -1);
+        Random random = new Random();
+        int index = random.nextInt(list.size());
+        int int_random = list.get(index);
+
+    }
+
+
+    public int getRuns(){
+        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, -1);
+        int total_run =0;
+        Random random=new Random();
+        int index = random.nextInt(list.size());
+        int int_random = list.get(index);
+
+        while (int_random != -1) {
+            total_run+=int_random;
+            System.out.println("Run at Ball : " + int_random);
+            index = random.nextInt(list.size());
+            int_random = list.get(index);
+        }
+        System.out.println("Out with total run: "+ total_run);
+
+    }
+    */
