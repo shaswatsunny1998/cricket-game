@@ -9,7 +9,8 @@ public class Team {
     private String teamId;
     private String teamName;
     private List<Player> players;
-    private int teamSize = 2;
+
+    private final static int TEAM_SIZE = 1;
 
 
     public Team(String teamId, String teamName) {
@@ -33,7 +34,7 @@ public class Team {
     }
 
     public void addPlayers(Scanner scan) {
-        for (int i = 0; i < teamSize; ++i) {
+        for (int i = 0; i < TEAM_SIZE; ++i) {
             System.out.println("Adding Information of Player: " + (int) (i + 1));
             players.add(addPlayer(scan));
         }

@@ -1,12 +1,14 @@
 package com.game.cricket.models;
 
-public class Player implements Person{
+public class Player{
     private int id;
     private String firstName;
     private String lastName;
     private int age;
     private String type=null;
-    private boolean onField=false;
+    private Batsman batsman=new Batsman();
+    private Bowler bowler=new Bowler();
+
     private static int idNext=0;
 
     public Player() {
@@ -17,6 +19,7 @@ public class Player implements Person{
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.batsman.setPosition(this.id);
     }
 
     public Player(String firstName, String lastName, int age, String type) {
@@ -59,6 +62,8 @@ public class Player implements Person{
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", type='" + type + '\'' +
+                ", batsman=" + batsman +
+                ", bowler=" + bowler +
                 '}';
     }
 
@@ -78,8 +83,16 @@ public class Player implements Person{
         this.type = type;
     }
 
-    @Override
-    public boolean isPlaying() {
-        return this.onField;
+    public Batsman getBatsman() {
+        return batsman;
     }
+
+    public Bowler getBowler(){
+        return bowler;
+    }
+
+    public void setBatsman(Batsman batsman) {
+        this.batsman = batsman;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.game.cricket;
 
+import com.game.cricket.models.Bowler;
+
 import java.util.Scanner;
 
 public class Main {
@@ -14,5 +16,9 @@ public class Main {
         System.out.println(match);
         match.addSecondTeam(scan);
         System.out.println(match);
+        match.start();
+        System.out.println(match);
+
+
     }
 }
