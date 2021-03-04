@@ -11,6 +11,9 @@ public class Batsman {
     private int totalRun;
     private boolean isOut;
 
+
+    //TODO Add PlayerId for Removing Data Redundancy in Database(Same with Bowler Attribute)
+
     public Batsman() {
     }
 
@@ -39,8 +42,13 @@ public class Batsman {
         }
     }
 
+    public boolean isOut() {
+        return isOut;
+    }
 
-
+    public void setOut(boolean out) {
+        isOut = out;
+    }
 
     public int getPosition() {
         return position;

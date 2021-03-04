@@ -11,7 +11,7 @@ public class Team {
     private List<Player> players;
     private int total_score;
 
-    private final static int TEAM_SIZE = 2;
+    public static final int TEAM_SIZE = 2;
 
 
 
@@ -75,7 +75,6 @@ public class Team {
     public void setTotal_score(int total_score) {
         this.total_score = total_score;
     }
-
 
     @Override
     public String toString() {

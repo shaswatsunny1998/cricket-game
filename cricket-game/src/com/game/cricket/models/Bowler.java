@@ -2,8 +2,6 @@ package com.game.cricket.models;
 
 import java.math.BigDecimal;
 
-import static java.lang.Math.round;
-
 public class Bowler {
 
     private int wicket;
@@ -13,6 +11,9 @@ public class Bowler {
     private int threeRun;
     private int fourRun;
     private int sixRun;
+    private int currBall;
+
+
 
 
     public Bowler() {
@@ -34,18 +35,6 @@ public class Bowler {
         return decimal.doubleValue();
     }
 
-    @Override
-    public String toString() {
-        return "Bowler{" +
-                "wicket=" + wicket +
-                ", dotRun=" + dotRun +
-                ", oneRun=" + oneRun +
-                ", twoRun=" + twoRun +
-                ", threeRun=" + threeRun +
-                ", fourRun=" + fourRun +
-                ", sixRun=" + sixRun +
-                '}';
-    }
 
     public void setRun(int run) {
         switch (run) {
@@ -57,8 +46,17 @@ public class Bowler {
             case 6 -> setSixRun(getSixRun() + 1);
 
         }
-
     }
+
+    public int getCurrBall() {
+        return currBall;
+    }
+
+    public void setCurrBall(int currBall) {
+        this.currBall = currBall;
+    }
+
+
     public int getWicket() {
         return wicket;
     }
@@ -113,6 +111,19 @@ public class Bowler {
 
     public void setSixRun(int sixRun) {
         this.sixRun = sixRun;
+    }
+    @Override
+    public String toString() {
+        return "Bowler{" +
+                "wicket=" + wicket +
+                ", dotRun=" + dotRun +
+                ", oneRun=" + oneRun +
+                ", twoRun=" + twoRun +
+                ", threeRun=" + threeRun +
+                ", fourRun=" + fourRun +
+                ", sixRun=" + sixRun +
+                ", currBall=" + currBall +
+                '}';
     }
 
 }

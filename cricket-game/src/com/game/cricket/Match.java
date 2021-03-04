@@ -35,9 +35,9 @@ public class Match {
         Team team = new Team("123", "India");
         team.setPlayers(Arrays.asList(
                 new Player("Shaswat", "Srivastava", 22),
-                new Player("Virat", "Kohli", 34),
-                new Player("Dhoni","Singh",45),
-                new Player("Tiger","Wicked",23)
+                new Player("Virat", "Kohli", 34)
+                //new Player("Dhoni","Singh",45),
+                //new Player("Tiger","Wicked",23)
         ));
         this.team1 = team;
 
@@ -88,62 +88,141 @@ public class Match {
 
 
     public void start() {
-        allPlayerOut();
+        singlePlayerMatch(team1,team2);
+        System.out.println("The Score to be chased: "+team1.getTotal_score());
+//        singlePlayerMatch(team2,team1);
+//        System.out.println("Score of Team 2: "+team2.getTotal_score());
+
     }
 
 
-    public void allPlayerOut() {
-        Team team = this.team1;
+    /*
 
-        int persons = 0;
-        for (Player player : team.getPlayers()) {
-            singlePlayerMatch(player, persons);
-        }
-        System.out.println("Final Score is: " + team.getTotal_score());
-    }
-
-    public Player getPlayer(Team team, int n) {
+    public Player getBowlingPlayer(Team team, int n) {
         if (n >= team.getPlayers().size()) {
             return team.getPlayers().get(n % team.getPlayers().size());
         }
         return team.getPlayers().get(n);
     }
 
-    public void singlePlayerMatch(Player p1, int persons) {
+
+
+    public void allPlayerOut(Team batting_team) {
+        Team team = batting_team;
+
+        int persons = 0;
+        for (Player player : team.getPlayers()) {
+            singlePlayerMatch(player, persons,team,this.team2);
+        }
+        System.out.println("Final Score is: " + team.getTotal_score());
+    }
+
+     */
+
+    public Player getBattingPlayer(Team battingTeam,int index){
+        List<Player> battingPlayers = battingTeam.getPlayers();
+        return battingPlayers.get(index);
+    }
+
+    public Player getBowlingPlayer(Team bowlingTeam,int index){
+        List<Player> bowling_players = bowlingTeam.getPlayers();
+        return bowling_players.get(index);
+    }
+
+    public int getValidBowler(List<Player> list,int index){
+        if(index>=list.size())
+            index = index%list.size();
+        return index;
+    }
+
+
+
+
+    public void singlePlayerMatch(Team batting_team,Team bowling_team) {
         RandomGenerator randomGenerator = new RandomGenerator();
 
+        //Immutable List
         List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 6, -1);
-        int totalScoreTeam1 = team1.getTotal_score();
-        Batsman batsman = p1.getBatsman();
 
+        int totalScoreTeam = batting_team.getTotal_score();
 
-        while (true) {
-            Player p2 = getPlayer(team2, persons);
-            persons++;
-            Bowler bowler = p2.getBowler();
-            int index = randomGenerator.getRandomRun(list.size());
-            int int_random = list.get(index);
-            for (int i = 0; i < BALLS_IN_A_OVER; ++i) {
+        int currBatsman=0;
+        List<Player> batting_players = batting_team.getPlayers();
+
+        int currBowler=0;
+        List<Player> bowling_players = bowling_team.getPlayers();
+
+        Player batting=batting_players.get(currBatsman);
+        currBatsman++;
+        Player running = batting_players.get(currBatsman);
+        Player neutral;
+
+        while (currBatsman<=Team.TEAM_SIZE-1) {
+            System.out.println("Initial On Batting Side : " + batting.getFirstName());
+            System.out.println("Initial On Running Side : " + running.getFirstName());
+
+            Bowler bowler = bowling_players.get(currBowler).getBowler();
+
+            System.out.println("Bowler Bowling: "+bowling_players.get(currBowler).getFirstName());
+
+            for (int i = bowler.getCurrBall(); i < BALLS_IN_A_OVER; ++i) {
+
+                int index = randomGenerator.getRandomRun(list.size());
+                int int_random = list.get(index);
+
                 if (int_random != -1) {
-                    totalScoreTeam1 += int_random;
-                    team1.setTotal_score(totalScoreTeam1);
-                    batsman.setRun(int_random);
+                    totalScoreTeam += int_random;
+                    batting_team.setTotal_score(totalScoreTeam);
+
+                    batting.getBatsman().setRun(int_random);
                     bowler.setRun(int_random);
+                    bowler.setCurrBall(bowler.getCurrBall()+1);
+
+                    if(int_random%2!=0)
+                    {
+                        neutral=batting;
+                        batting=running;
+                        running=neutral;
+                    }
                     System.out.println("Run at Ball " + (int)(i+1)+": " + int_random);
-                    index = randomGenerator.getRandomRun(list.size());
-                    int_random = list.get(index);
+                    System.out.println("After ball On Batting Side : " + batting.getFirstName());
+                    System.out.println("After ball On Running Side : " + running.getFirstName());
+
                 } else {
                     bowler.setWicket(bowler.getWicket() + 1);
                     System.out.println(bowler.getOvers());
+
                     System.out.println(bowler.getTotalRuns());
-                    System.out.println("Out with total run: " + batsman.getTotalRun());
-                    return;
+                    batting.getBatsman().setOut(true);
+
+                    currBatsman++;
+                    bowler.setCurrBall(bowler.getCurrBall()+1);
+
+                    System.out.println("Out at Ball: " + bowler.getCurrBall());
+                    System.out.println("Out with total run: " + batting.getBatsman().getTotalRun());
+
+                    running.getBatsman().getTotalRun();
+                    break;
                 }
+
             }
-            System.out.println("Over Changing---------");
+            if(bowler.getCurrBall()==BALLS_IN_A_OVER){
+                System.out.println("Over Changing---------");
+                bowler.setCurrBall(0);
+                currBowler++;
+                currBowler=getValidBowler(bowling_players,currBowler);
+
+                neutral=batting;
+                batting=running;
+                running=neutral;
+            }
         }
 
     }
+
+
+
+
 
 
     public String getMatchId() {
