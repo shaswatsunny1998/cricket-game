@@ -19,6 +19,28 @@ public class Batsman {
         this.isOut = false;
     }
 
+    public int getTotalRun() {
+        totalRun = this.getTwoRun()*2 + this.getOneRun() + this.getThreeRun()*3 + this.getFourRun()*4 + this.getSixRun()*6;
+        return totalRun;
+    }
+
+    public void setTotalRun(int totalRun) {
+        this.totalRun = totalRun;
+    }
+
+    public void setRun(int run) {
+        switch (run) {
+            case 0 -> setDotRun(getDotRun() + 1);
+            case 1 -> setOneRun(getOneRun() + 1);
+            case 2 -> setTwoRun(getTwoRun() + 1);
+            case 3 -> setThreeRun(getThreeRun() + 1);
+            case 4 -> setFourRun(getFourRun() + 1);
+            case 6 -> setSixRun(getSixRun() + 1);
+        }
+    }
+
+
+
 
     public int getPosition() {
         return position;
@@ -74,33 +96,6 @@ public class Batsman {
 
     public void setSixRun(int sixRun) {
         this.sixRun = sixRun;
-    }
-
-    public int getTotalRun() {
-        totalRun = this.getTwoRun() + this.getOneRun() + this.getThreeRun() + this.getFourRun() + this.getSixRun();
-        return totalRun;
-    }
-
-    public void setTotalRun(int totalRun) {
-        this.totalRun = totalRun;
-    }
-
-    public void setRun(int run) {
-        switch (run) {
-            case 0:
-                setDotRun(getDotRun() + 1);
-                break;
-            case 1:
-                setOneRun(getOneRun() + 1);
-                break;
-            case 2:
-                setTwoRun(getTwoRun() + 1);
-                break;
-            case 3: setThreeRun(getThreeRun()+1);
-                break;
-            case 4: setFourRun(getFourRun()+1);
-                break;
-        }
     }
 
 

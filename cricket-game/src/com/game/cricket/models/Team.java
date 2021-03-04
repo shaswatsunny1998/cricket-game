@@ -9,8 +9,10 @@ public class Team {
     private String teamId;
     private String teamName;
     private List<Player> players;
+    private int total_score;
 
-    private final static int TEAM_SIZE = 1;
+    private final static int TEAM_SIZE = 2;
+
 
 
     public Team(String teamId, String teamName) {
@@ -66,12 +68,23 @@ public class Team {
         this.players = players;
     }
 
+    public int getTotal_score() {
+        return total_score;
+    }
+
+    public void setTotal_score(int total_score) {
+        this.total_score = total_score;
+    }
+
+
     @Override
     public String toString() {
         return "Team{" +
                 "teamId='" + teamId + '\'' +
                 ", teamName='" + teamName + '\'' +
                 ", players=" + players +
+                ", total_score=" + total_score +
                 '}';
     }
+
 }
