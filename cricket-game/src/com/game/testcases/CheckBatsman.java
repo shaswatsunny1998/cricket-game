@@ -1,10 +1,12 @@
 package com.game.testcases;
 
 import com.game.cricket.models.Batsman;
+import com.game.cricket.models.Player;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CheckBatsman {
+    /*
     @Test
     public void checkTotalRuns(){
         Batsman batsman=new Batsman();
@@ -24,6 +26,16 @@ public class CheckBatsman {
         assertEquals(batsman.getTotalRun(),new Batsman().getTotalRun());
         //DotRuns Counted
         assertEquals(batsman,new Batsman());
+    }
+
+     */
+
+
+
+    @Test
+    public void checkBatsman(){
+        Player player = new Batsman("Shaswat","Srivastava",22);
+        System.out.println(player);
     }
 
 

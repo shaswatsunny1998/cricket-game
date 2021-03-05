@@ -1,41 +1,34 @@
 package com.game.cricket.models;
 
 public class Player{
-    private int id;
     private String firstName;
     private String lastName;
     private int age;
     private String type=null;
-    private Batsman batsman=new Batsman();
-    private Bowler bowler=new Bowler();
-
-    private static int idNext=0;
+    private Score score=new Score();
 
     public Player() {
     }
 
     public Player(String firstName, String lastName, int age) {
-        this.id = idNext++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.batsman.setPosition(this.id);
     }
 
     public Player(String firstName, String lastName, int age, String type) {
-        this.id = idNext++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.type = type;
     }
 
-    public int getId() {
-        return id;
+    public Score getScore() {
+        return score;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setScore(Score score) {
+        this.score = score;
     }
 
     public String getFirstName() {
@@ -54,18 +47,6 @@ public class Player{
         this.lastName = lastName;
     }
 
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", type='" + type + '\'' +
-                ", batsman=" + batsman +
-                ", bowler=" + bowler +
-                '}';
-    }
 
     public int getAge() {
         return age;
@@ -83,16 +64,14 @@ public class Player{
         this.type = type;
     }
 
-    public Batsman getBatsman() {
-        return batsman;
+    @Override
+    public String toString() {
+        return "Player{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", type='" + type + '\'' +
+                ", score=" + score +
+                '}';
     }
-
-    public Bowler getBowler(){
-        return bowler;
-    }
-
-    public void setBatsman(Batsman batsman) {
-        this.batsman = batsman;
-    }
-
 }
