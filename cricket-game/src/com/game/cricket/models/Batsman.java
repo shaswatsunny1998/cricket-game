@@ -11,8 +11,9 @@ public class Batsman {
     private int totalRun;
     private boolean isOut;
 
-
     //TODO Add PlayerId for Removing Data Redundancy in Database(Same with Bowler Attribute)
+    // Add yet_to_bat field
+    // Add number_of_balls_played
 
     public Batsman() {
     }

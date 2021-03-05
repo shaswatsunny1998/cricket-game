@@ -11,7 +11,7 @@ public class Team {
     private List<Player> players;
     private int total_score;
 
-    public static final int TEAM_SIZE = 2;
+    public static final int TEAM_SIZE = 3;
 
 
 
@@ -19,6 +19,14 @@ public class Team {
         this.teamId = teamId;
         this.teamName = teamName;
         this.players = new ArrayList<Player>();
+
+    }
+
+
+    public boolean isLastPlayer(int index){
+        if(index==TEAM_SIZE)
+            return true;
+        return false;
 
     }
 

@@ -123,6 +123,7 @@ public class Bowler {
                 ", fourRun=" + fourRun +
                 ", sixRun=" + sixRun +
                 ", currBall=" + currBall +
+                ", totalRunsGiven=" + getTotalRuns()+
                 '}';
     }
 

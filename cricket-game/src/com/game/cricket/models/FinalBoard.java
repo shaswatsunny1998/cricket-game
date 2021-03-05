@@ -2,30 +2,33 @@ package com.game.cricket.models;
 
 public class FinalBoard {
 
-    private String wonTeam;
-    private String looseTeam;
+    private String firstTeam;
+    private String secondTeam;
     private boolean winByWicket;
 
-    public FinalBoard(String wonTeam, String looseTeam, boolean winByWicket) {
-        this.wonTeam = wonTeam;
-        this.looseTeam = looseTeam;
+    public FinalBoard() {
+    }
+
+    public FinalBoard(String firstTeam, String secondTeam, boolean winByWicket) {
+        this.firstTeam = firstTeam;
+        this.secondTeam = secondTeam;
         this.winByWicket = winByWicket;
     }
 
-    public String getWonTeam() {
-        return wonTeam;
+    public String getfirstTeam() {
+        return firstTeam;
     }
 
-    public void setWonTeam(String wonTeam) {
-        this.wonTeam = wonTeam;
+    public void setfirstTeam(String firstTeam) {
+        this.firstTeam = firstTeam;
     }
 
-    public String getLooseTeam() {
-        return looseTeam;
+    public String getsecondTeam() {
+        return secondTeam;
     }
 
-    public void setLooseTeam(String looseTeam) {
-        this.looseTeam = looseTeam;
+    public void setsecondTeam(String secondTeam) {
+        this.secondTeam = secondTeam;
     }
 
     public boolean isWinByWicket() {
@@ -39,8 +42,8 @@ public class FinalBoard {
     @Override
     public String toString() {
         return "FinalBoard{" +
-                "wonTeam='" + wonTeam + '\'' +
-                ", looseTeam='" + looseTeam + '\'' +
+                "firstTeam='" + firstTeam + '\'' +
+                ", secondTeam='" + secondTeam + '\'' +
                 ", winByWicket=" + winByWicket +
                 '}';
     }
