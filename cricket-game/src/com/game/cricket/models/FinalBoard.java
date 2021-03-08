@@ -1,50 +1,58 @@
 package com.game.cricket.models;
 
+import java.util.List;
+
 public class FinalBoard {
 
-    private String firstTeam;
-    private String secondTeam;
-    private boolean winByWicket;
+    private Team firstTeam;
+    private Team secondTeam;
+
 
     public FinalBoard() {
     }
 
-    public FinalBoard(String firstTeam, String secondTeam, boolean winByWicket) {
+    public FinalBoard(Team firstTeam, Team secondTeam) {
         this.firstTeam = firstTeam;
         this.secondTeam = secondTeam;
-        this.winByWicket = winByWicket;
     }
 
-    public String getfirstTeam() {
-        return firstTeam;
+    public void winnerTeam(){
+        if (secondTeam.getTotal_score() > firstTeam.getTotal_score()) {
+            System.out.println("Team 2 WON");
+        } else {
+            System.out.println("Team 1 WON");
+        }
     }
 
-    public void setfirstTeam(String firstTeam) {
-        this.firstTeam = firstTeam;
+    public int getRunsByFirstTeam(){
+        return firstTeam.getTotal_score();
     }
 
-    public String getsecondTeam() {
-        return secondTeam;
+    public int getRunsBySecondTeam(){
+        return secondTeam.getTotal_score();
     }
 
-    public void setsecondTeam(String secondTeam) {
-        this.secondTeam = secondTeam;
+    public int wicketDown(List<? extends Player> players )
+    {
+        return 0;
+
     }
 
-    public boolean isWinByWicket() {
-        return winByWicket;
+    public int wicketsDownFirstTeam(){
+        int wickets=0;
+        return 0;
+
     }
 
-    public void setWinByWicket(boolean winByWicket) {
-        this.winByWicket = winByWicket;
+    public int wicketDownsSecondTeam(){
+        return  0;
     }
 
-    @Override
-    public String toString() {
-        return "FinalBoard{" +
-                "firstTeam='" + firstTeam + '\'' +
-                ", secondTeam='" + secondTeam + '\'' +
-                ", winByWicket=" + winByWicket +
-                '}';
+    public void getMatchDetails(){
+
+
     }
+
+
+
 }

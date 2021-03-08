@@ -1,11 +1,14 @@
 package com.game.cricket.models;
 
 public class Player{
+    private int playerId;
     private String firstName;
     private String lastName;
     private int age;
     private String type=null;
     private Score score=new Score();
+
+    private static int ID=0;
 
     public Player() {
     }
@@ -21,6 +24,16 @@ public class Player{
         this.lastName = lastName;
         this.age = age;
         this.type = type;
+        this.playerId=ID;
+        ID++;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 
     public Score getScore() {
@@ -67,7 +80,8 @@ public class Player{
     @Override
     public String toString() {
         return "Player{" +
-                "firstName='" + firstName + '\'' +
+                "playerId=" + playerId +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", type='" + type + '\'' +

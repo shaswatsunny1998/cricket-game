@@ -1,7 +1,8 @@
 package com.game.cricket.models;
 
 public class Over {
-    public static final int NUM_OF_BALLS=6;
+    public static final int NUM_OF_BALLS = 6;
+    private int playerId;
     private int wicket;
     private int dotBalls;
     private int oneRun;
@@ -16,6 +17,14 @@ public class Over {
     public Over() {
     }
 
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
 
     public int getCurrBall() {
         return currBall;
@@ -86,8 +95,9 @@ public class Over {
     }
 
     public void setTotalRun() {
-        this.totalRun = this.fourRun*4+this.oneRun+this.threeRun*3+this.twoRun*2+this.sixRun*6;
+        this.totalRun = this.fourRun * 4 + this.oneRun + this.threeRun * 3 + this.twoRun * 2 + this.sixRun * 6;
     }
+
     public void setRun(int run) {
         switch (run) {
             case 0 -> setDotBalls(getDotBalls() + 1);
@@ -102,7 +112,8 @@ public class Over {
     @Override
     public String toString() {
         return "Over{" +
-                "wicket=" + wicket +
+                "playerId=" + playerId +
+                ", wicket=" + wicket +
                 ", dotBalls=" + dotBalls +
                 ", oneRun=" + oneRun +
                 ", twoRun=" + twoRun +
@@ -110,6 +121,7 @@ public class Over {
                 ", fourRun=" + fourRun +
                 ", sixRun=" + sixRun +
                 ", totalRun=" + totalRun +
+                ", currBall=" + currBall +
                 '}';
     }
 }

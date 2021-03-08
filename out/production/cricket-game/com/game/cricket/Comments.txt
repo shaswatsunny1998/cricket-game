@@ -1,157 +1,240 @@
-/*
-    public static int getCurrBallRun() {
-        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, -1);
-        Random random = new Random();
-        int index = random.nextInt(list.size());
-        int int_random = list.get(index);
-
-    }
-
-
-    public int getRuns(){
-        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, -1);
-        int total_run =0;
-        Random random=new Random();
-        int index = random.nextInt(list.size());
-        int int_random = list.get(index);
-
-        while (int_random != -1) {
-            total_run+=int_random;
-            System.out.println("Run at Ball : " + int_random);
-            index = random.nextInt(list.size());
-            int_random = list.get(index);
-        }
-        System.out.println("Out with total run: "+ total_run);
-
-    }
-    */
-    //players = Arrays.asList(new Player("Shaswat", "Srivastava", 30, "Batsman"),
-        //                new Player("Amitesh", "Srivastava", 29, "Batsman")
-        //        );
-
-
-
-/*
-
-    public Player getBowlingPlayer(Team team, int n) {
-        if (n >= team.getPlayers().size()) {
-            return team.getPlayers().get(n % team.getPlayers().size());
-        }
-        return team.getPlayers().get(n);
-    }
-
-
-
-    public void allPlayerOut(Team batting_team) {
-        Team team = batting_team;
-
-        int persons = 0;
-        for (Player player : team.getPlayers()) {
-            singlePlayerMatch(player, persons,team,this.team2);
-        }
-        System.out.println("Final Score is: " + team.getTotal_score());
-    }
 
      */
+public void firstHalfMatch(Team batting_team, Team bowling_team,List<Over> firstHalfOvers) {
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+        //Immutable List
+        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 6, -1);
+
+        int totalScoreTeam = batting_team.getTotal_score();
+
+        int currBatsman = 0;
+        List<Player> batting_players = batting_team.getPlayers();
+
+        int currBowler = 0;
+        //TODO think of data structure which can help in getting shuffled bowlers
+        // - Heap?
+        List<Player> bowling_players = bowling_team.getPlayers();
 
 
+        // Here Batting is becoming Player Variable.
+        Player batting = batting_players.get(currBatsman);
+        currBatsman++;
+        Player running = batting_players.get(currBatsman);
+        Player neutral;
+
+        int currOver = 0;
+
+        Over over=new Over();
+
+        // TODO Breakdown Function in different sub-division
+        while (currBatsman <= Team.TEAM_SIZE - 1) {
+            System.out.println("Initial On Batting Side : " + batting.getFirstName());
+            System.out.println("Initial On Running Side : " + running.getFirstName());
+
+            Player bowler = bowling_players.get(currBowler);
+
+            System.out.println("Bowler Bowling: " + bowler.getFirstName());
+
+            if(over.getCurrBall()<Over.NUM_OF_BALLS){
+
+            }
+            else{
+                over = new Over();
+            }
+
+            for (int i = bowler.getScore().getCurrBall(); i < Over.NUM_OF_BALLS; ++i) {
+
+                int index = randomGenerator.getRandomRun(list.size());
+                int int_random = list.get(index);
+                over.setCurrBall(over.getCurrBall()+1);
+
+                if (int_random != -1) {
+
+                    totalScoreTeam += int_random;
+                    batting_team.setTotal_score(totalScoreTeam);
+
+                    batting.getScore().setRun(int_random);
+                    bowler.getScore().setRunBowl(int_random);
+                    bowler.getScore().setCurrBall(bowler.getScore().getCurrBall() + 1);
+
+                    if (int_random % 2 != 0) {
+                        neutral = batting;
+                        batting = running;
+                        running = neutral;
+                    }
+                    over.setRun(int_random);
+                    System.out.println("Run at Ball " + (int) (i + 1) + ": " + int_random);
+                    System.out.println("After ball On Batting Side : " + batting.getFirstName());
+                    System.out.println("After ball On Running Side : " + running.getFirstName());
+
+                    //TODO In second half don't add the total runs to the batting player side(if run by wicket).
+
+                } else {
+                    bowler.getScore().setWickets(bowler.getScore().getWickets() + 1);
+                    System.out.println(bowler.getScore().getOvers());
+
+                    System.out.println(bowler.getScore().getTotalRunsBowlGiven());
+                    batting.getScore().setOut(true);
+
+                    bowler.getScore().setCurrBall(bowler.getScore().getCurrBall() + 1);
+
+                    System.out.println("Out at Ball: " + bowler.getScore().getCurrBall());
+                    System.out.println("Out with total run: " + batting.getScore().getTotalRun());
+
+                    over.setWicket(over.getWicket() + 1);
+
+                    running.getScore().getTotalRun();
+                    currBatsman++;
+
+                    if (!batting_team.isLastPlayer(currBatsman)) {
+                        batting = batting_players.get(currBatsman);
+                    }
+                    break;
+                }
+
+            }
+            if (bowler.getScore().getCurrBall() == Over.NUM_OF_BALLS) {
+                System.out.println("Over Changing---------");
+
+                over.setTotalRun();
+                firstHalfOvers.add(over);
+
+                bowler.getScore().setCurrBall(0);
+                currBowler++;
+                currBowler = getValidBowler(bowling_players, currBowler);
+                neutral = batting;
+                batting = running;
+                running = neutral;
+            }
+            if (currBatsman > Team.TEAM_SIZE - 1) {
+                over.setTotalRun();
+                firstHalfOvers.add(over);
+            }
+        }
+    }
+
+    public void secondHalfMatch(Team batting_team, Team bowling_team, int chaseScore,List<Over> secondHalfOvers) {
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+        //Immutable List
+        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 6, -1);
+
+        int totalScoreTeam = batting_team.getTotal_score();
+
+        int currBatsman = 0;
+        List<Player> batting_players = batting_team.getPlayers();
+
+        int currBowler = 0;
+        //TODO think of data structure which can help in getting shuffled bowlers
+        // - Heap?
+        List<Player> bowling_players = bowling_team.getPlayers();
+
+        Player batting = batting_players.get(currBatsman);
+        currBatsman++;
+        Player running = batting_players.get(currBatsman);
+        Player neutral;
+
+        int currOver = 0;
+
+        Over over=new Over();
 
 
+        // TODO Breakdown Function in different sub-division
+        while (currBatsman <= Team.TEAM_SIZE - 1) {
+            System.out.println("Initial On Batting Side : " + batting.getFirstName());
+            System.out.println("Initial On Running Side : " + running.getFirstName());
 
-    /*
-     //TODO - Eliminate Function Redundancy
+            Player bowler = bowling_players.get(currBowler);
+
+            System.out.println("Bowler Bowling: " + bowler.getFirstName());
+
+            if(over.getCurrBall()<Over.NUM_OF_BALLS){
+
+            }
+            else{
+                over = new Over();
+            }
 
 
-         public void secondHalfMatch(Team batting_team, Team bowling_team, int chaseScore) {
-             RandomGenerator randomGenerator = new RandomGenerator();
+            for (int i = bowler.getScore().getCurrBall(); i < Over.NUM_OF_BALLS; ++i) {
 
-             //Immutable List
-             List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 6, -1);
+                int index = randomGenerator.getRandomRun(list.size());
+                int int_random = list.get(index);
 
-             int totalScoreTeam = batting_team.getTotal_score();
+                over.setCurrBall(over.getCurrBall()+1);
 
-             int currBatsman = 0;
-             List<Player> batting_players = batting_team.getPlayers();
+                if (int_random != -1) {
 
-             int currBowler = 0;
-             List<Player> bowling_players = bowling_team.getPlayers();
+                    totalScoreTeam += int_random;
+                    batting_team.setTotal_score(totalScoreTeam);
 
-             Player batting = batting_players.get(currBatsman);
-             currBatsman++;
-             Player running = batting_players.get(currBatsman);
-             Player neutral;
+                    batting.getScore().setRun(int_random);
+                    bowler.getScore().setRunBowl(int_random);
+                    bowler.getScore().setCurrBall(bowler.getScore().getCurrBall() + 1);
 
-             while (currBatsman <= Team.TEAM_SIZE - 1) {
-                 System.out.println("Initial On Batting Side : " + batting.getFirstName());
-                 System.out.println("Initial On Running Side : " + running.getFirstName());
+                    if (int_random % 2 != 0) {
+                        neutral = batting;
+                        batting = running;
+                        running = neutral;
+                    }
+                    over.setRun(int_random);
+                    System.out.println("Run at Ball " + (int) (i + 1) + ": " + int_random);
+                    System.out.println("After ball On Batting Side : " + batting.getFirstName());
+                    System.out.println("After ball On Running Side : " + running.getFirstName());
 
-                 Bowler bowler = bowling_players.get(currBowler).getBowler();
+                    if (batting_team.getTotal_score() > chaseScore) {
+                        over.setTotalRun();
+                        secondHalfOvers.add(over);
+                        return;
+                    }
+                    //TODO In second half don't add the total runs to the batting player side(if run by wicket).
 
-                 System.out.println("Bowler Bowling: " + bowling_players.get(currBowler).getFirstName());
+                } else {
+                    bowler.getScore().setWickets(bowler.getScore().getWickets() + 1);
+                    System.out.println(bowler.getScore().getOvers());
 
-                 for (int i = bowler.getCurrBall(); i < BALLS_IN_A_OVER; ++i) {
+                    System.out.println(bowler.getScore().getTotalRunsBowlGiven());
+                    batting.getScore().setOut(true);
 
-                     int index = randomGenerator.getRandomRun(list.size());
-                     int int_random = list.get(index);
+                    bowler.getScore().setCurrBall(bowler.getScore().getCurrBall() + 1);
 
-                     if (int_random != -1) {
+                    System.out.println("Out at Ball: " + bowler.getScore().getCurrBall());
+                    System.out.println("Out with total run: " + batting.getScore().getTotalRun());
 
-                         totalScoreTeam += int_random;
-                         batting_team.setTotal_score(totalScoreTeam);
+                    over.setWicket(over.getWicket() + 1);
 
-                         batting.getBatsman().setRun(int_random);
-                         bowler.setRun(int_random);
-                         bowler.setCurrBall(bowler.getCurrBall() + 1);
+                    running.getScore().getTotalRun();
 
-                         if (int_random % 2 != 0) {
-                             neutral = batting;
-                             batting = running;
-                             running = neutral;
-                         }
-                         System.out.println("Run at Ball " + (int) (i + 1) + ": " + int_random);
-                         System.out.println("After ball On Batting Side : " + batting.getFirstName());
-                         System.out.println("After ball On Running Side : " + running.getFirstName());
+                    currBatsman++;
 
-                         if (batting_team.getTotal_score() > chaseScore)
-                             return;
-                         //TODO In second half don't add the total runs to the batting player side(if run by wicket).
+                    if (!batting_team.isLastPlayer(currBatsman)) {
+                        batting = batting_players.get(currBatsman);
+                    }
+                    break;
+                }
 
-                     } else {
-                         bowler.setWicket(bowler.getWicket() + 1);
-                         System.out.println(bowler.getOvers());
+            }
+            if (bowler.getScore().getCurrBall() == Over.NUM_OF_BALLS) {
+                System.out.println("Over Changing---------");
 
-                         System.out.println(bowler.getTotalRuns());
-                         batting.getBatsman().setOut(true);
+                over.setTotalRun();
+                secondHalfOvers.add(over);
 
-                         bowler.setCurrBall(bowler.getCurrBall() + 1);
+                bowler.getScore().setCurrBall(0);
+                currBowler++;
+                currBowler = getValidBowler(bowling_players, currBowler);
+                neutral = batting;
+                batting = running;
+                running = neutral;
+            }
+            if (currBatsman > Team.TEAM_SIZE - 1) {
+                over.setTotalRun();
+                secondHalfOvers.add(over);
+            }
+        }
 
-                         System.out.println("Out at Ball: " + bowler.getCurrBall());
-                         System.out.println("Out with total run: " + batting.getBatsman().getTotalRun());
-
-                         running.getBatsman().getTotalRun();
-                         currBatsman++;
-
-                         if (!batting_team.isLastPlayer(currBatsman)) {
-                             batting = batting_players.get(currBatsman);
-                         }
-                         break;
-                     }
-
-                 }
-                 if (bowler.getCurrBall() == BALLS_IN_A_OVER) {
-                     System.out.println("Over Changing---------");
-
-                     bowler.setCurrBall(0);
-                     currBowler++;
-                     currBowler = getValidBowler(bowling_players, currBowler);
-                     neutral = batting;
-                     batting = running;
-                     running = neutral;
-                 }
-
-             }
-         }
-        */
+    }
 
 
         /*
