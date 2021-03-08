@@ -1,7 +1,6 @@
 package com.game.cricket;
 
 import com.game.cricket.models.*;
-import com.game.cricket.util.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,7 +48,7 @@ public class Match {
 
         Team team = new Team("123", "India");
         team.setPlayers(Arrays.asList(
-                new Batsman("Shaswat", "Srivastava", 22),
+                new Bowler("Shaswat", "Srivastava", 22),
                 new Batsman("Virat", "Kohli", 34),
                 new Bowler("Dhoni", "Singh", 45)
         ));
@@ -68,53 +67,20 @@ public class Match {
     }
 
 
-
     public void start() {
         initializeOvers();
-        //finalBoard = new FinalBoard();
-        Inning inning=new Inning();
-        //inning.firstHalfMatch(team1,team2,this.firstHalfOvers);
-        inning.singleInning(team1, team2,0,this.firstHalfOvers,false);
+        Inning inning = new Inning();
+        inning.singleInning(team1, team2, 0, this.firstHalfOvers, false);
         System.out.println("The Score to be chased: " + team1.getTotal_score());
         System.out.println(firstHalfOvers);
         System.out.println("--------------------------------");
-        inning.singleInning(team2, team1, team1.getTotal_score(),this.secondHalfOvers,true);
+        inning.singleInning(team2, team1, team1.getTotal_score(), this.secondHalfOvers, true);
         System.out.println("Score by Team 2: " + team2.getTotal_score());
         System.out.println(secondHalfOvers);
-
+        FinalBoard finalBoard = new FinalBoard(this.team1, this.team2);
+        finalBoard.result();
     }
 
-    /**
-     * Will Be used in the Week-2
-     *
-     * @param battingTeam
-     * @param index
-     * @return player
-     */
-    public Player getBattingPlayer(Team battingTeam, int index) {
-        List<Player> battingPlayers = battingTeam.getPlayers();
-        return battingPlayers.get(index);
-    }
-
-    /**
-     * Will Be used in the Week-2
-     *
-     * @param bowlingTeam
-     * @param index
-     * @return player
-     */
-
-
-    public Player getBowlingPlayer(Team bowlingTeam, int index) {
-        List<Player> bowling_players = bowlingTeam.getPlayers();
-        return bowling_players.get(index);
-    }
-
-    public int getValidBowler(List<Player> list, int index) {
-        if (index >= list.size())
-            index = index % list.size();
-        return index;
-    }
 
     public String getMatchId() {
         return matchId;

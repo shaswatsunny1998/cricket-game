@@ -29,7 +29,7 @@ public class Team {
         return false;
 
     }
-
+/*
     public Player addPlayer(Scanner scan) {
         System.out.println("---------");
         System.out.println("Enter First Name: ");
@@ -50,6 +50,8 @@ public class Team {
         }
 
     }
+
+ */
 
 
     public String getTeamId() {

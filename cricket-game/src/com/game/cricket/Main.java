@@ -1,6 +1,8 @@
 package com.game.cricket;
 
-import com.game.cricket.models.Batsman;
+import com.game.cricket.models.BatsmanSelector;
+import com.game.cricket.models.BatsmanSelectorInterface;
+import com.game.cricket.models.Bowler;
 
 import java.util.Scanner;
 
@@ -20,21 +22,6 @@ public class Main {
         System.out.println(match);
         match.start();
         System.out.println(match);
-
-
-        /*
-        RandomGenerator randomGenerator=new RandomGenerator();
-        int value=randomGenerator.getRandomCoin();
-        if(value==0){
-            System.out.println(coin.HEADS);
-        }
-        else{
-            System.out.println(coin.TAILS);
-        }
-
-         */
-
-
     }
 
 }

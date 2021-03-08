@@ -1,5 +1,8 @@
 package com.game.cricket.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Over {
     public static final int NUM_OF_BALLS = 6;
     private int playerId;
@@ -12,11 +15,23 @@ public class Over {
     private int sixRun;
     private int totalRun;
     private int currBall;
+    private List<Ball> balls;
+    private List<Wicket> wickets;
 
 
     public Over() {
+        balls = new ArrayList<Ball>(NUM_OF_BALLS);
+        wickets = new ArrayList<Wicket>();
     }
 
+
+    public List<Ball> getBalls() {
+        return balls;
+    }
+
+    public void setBalls(List<Ball> balls) {
+        this.balls = balls;
+    }
 
     public int getPlayerId() {
         return playerId;
@@ -98,6 +113,18 @@ public class Over {
         this.totalRun = this.fourRun * 4 + this.oneRun + this.threeRun * 3 + this.twoRun * 2 + this.sixRun * 6;
     }
 
+    public List<Wicket> getWickets() {
+        return wickets;
+    }
+
+    public void setWickets(List<Wicket> wickets) {
+        this.wickets = wickets;
+    }
+
+    public void addWicket(String batsman , String bowler,int ballNo){
+        wickets.add(new Wicket(batsman,bowler,ballNo));
+    }
+
     public void setRun(int run) {
         switch (run) {
             case 0 -> setDotBalls(getDotBalls() + 1);
@@ -122,6 +149,8 @@ public class Over {
                 ", sixRun=" + sixRun +
                 ", totalRun=" + totalRun +
                 ", currBall=" + currBall +
+                ", balls=" + balls +
+                ", wickets=" + wickets +
                 '}';
     }
 }

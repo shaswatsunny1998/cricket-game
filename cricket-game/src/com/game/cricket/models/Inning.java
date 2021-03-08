@@ -1,21 +1,22 @@
 package com.game.cricket.models;
 
-import com.game.cricket.Match;
 import com.game.cricket.util.RandomGenerator;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Inning {
+    BowlerSelector bowlerSelector;
+    BatsmanSelector batsmanSelector;
 
-    public int getValidBowler(List<Player> list, int index) {
-        if (index >= list.size())
-            index = index % list.size();
-        return index;
+    public Inning() {
+        bowlerSelector = new BowlerSelector();
+        batsmanSelector = new BatsmanSelector();
     }
 
-    public void singleInning(Team batting_team, Team bowling_team, int chaseScore,List<Over> overs,boolean isChasing) {
+    public void singleInning(Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
         RandomGenerator randomGenerator = new RandomGenerator();
+
 
         //Immutable List
         List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 6, -1);
@@ -23,12 +24,10 @@ public class Inning {
         int totalScoreTeam = batting_team.getTotal_score();
 
         int currBatsman = 0;
-        List<Player> batting_players = batting_team.getPlayers();
+        List<Player> batting_players = batsmanSelector.getBattingPlayers(batting_team.getPlayers());
 
         int currBowler = 0;
-        //TODO think of data structure which can help in getting shuffled bowlers
-        // - Heap?
-        List<Player> bowling_players = bowling_team.getPlayers();
+        List<Player> bowling_players = bowlerSelector.getBowlingPlayers(bowling_team.getPlayers());
 
         Player batting = batting_players.get(currBatsman);
         currBatsman++;
@@ -37,7 +36,7 @@ public class Inning {
 
         int currOver = 0;
 
-        Over over=new Over();
+        Over over = new Over();
 
         while (currBatsman <= Team.TEAM_SIZE - 1) {
             System.out.println("Initial On Batting Side : " + batting.getFirstName());
@@ -47,10 +46,9 @@ public class Inning {
 
             System.out.println("Bowler Bowling: " + bowler.getFirstName());
 
-            if(over.getCurrBall()<Over.NUM_OF_BALLS){
+            if (over.getCurrBall() < Over.NUM_OF_BALLS) {
 
-            }
-            else{
+            } else {
                 over = new Over();
             }
 
@@ -60,7 +58,9 @@ public class Inning {
                 int index = randomGenerator.getRandomRun(list.size());
                 int int_random = list.get(index);
 
-                over.setCurrBall(over.getCurrBall()+1);
+                Ball ball=new Ball(int_random);
+                over.setCurrBall(over.getCurrBall() + 1);
+                over.getBalls().add(ball);
 
                 if (int_random != -1) {
 
@@ -81,7 +81,7 @@ public class Inning {
                     System.out.println("After ball On Batting Side : " + batting.getFirstName());
                     System.out.println("After ball On Running Side : " + running.getFirstName());
 
-                    if(isChasing){
+                    if (isChasing) {
                         if (batting_team.getTotal_score() > chaseScore) {
                             over.setTotalRun();
                             overs.add(over);
@@ -107,6 +107,9 @@ public class Inning {
 
                     running.getScore().getTotalRun();
 
+                    //Indexing is Odd.
+                    over.addWicket(batting.getFirstName()+" "+batting.getLastName(),bowler.getFirstName()+" "+bowler.getLastName(),over.getCurrBall());
+
                     currBatsman++;
 
                     if (!batting_team.isLastPlayer(currBatsman)) {
@@ -125,7 +128,7 @@ public class Inning {
 
                 bowler.getScore().setCurrBall(0);
                 currBowler++;
-                currBowler = getValidBowler(bowling_players, currBowler);
+                currBowler = bowlerSelector.getValidBowler(bowling_players, currBowler);
                 neutral = batting;
                 batting = running;
                 running = neutral;
@@ -138,4 +141,14 @@ public class Inning {
         }
 
     }
+
+//    public int getRun(Player player) {
+//        if (player instanceof Batsman) {
+//            Batsman batsman = (Batsman) player;
+//            batsman.getRun();
+//        }
+//
+//
+//    }
+
 }

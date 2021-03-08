@@ -16,7 +16,7 @@ public class FinalBoard {
         this.secondTeam = secondTeam;
     }
 
-    public void winnerTeam(){
+    public void result(){
         if (secondTeam.getTotal_score() > firstTeam.getTotal_score()) {
             System.out.println("Team 2 WON");
         } else {

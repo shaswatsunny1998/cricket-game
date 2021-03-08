@@ -19,6 +19,7 @@ public class Score {
     private int sixRun;
     private int totalRun;
     private boolean isOut;
+    private int strikeRate;
 
     //Balling Attributes
     private int wickets;
@@ -101,6 +102,15 @@ public class Score {
 
 
     //Getters and Setters
+
+
+    public int getStrikeRate() {
+        return strikeRate;
+    }
+
+    public void setStrikeRate(int strikeRate) {
+        this.strikeRate = strikeRate;
+    }
 
     public int getPosition() {
         return position;
@@ -242,6 +252,7 @@ public class Score {
                 ", sixRun=" + sixRun +
                 ", totalRun=" + totalRun +
                 ", isOut=" + isOut +
+                ", strikeRate=" + strikeRate +
                 ", wickets=" + wickets +
                 ", dotBalls=" + dotBalls +
                 ", oneRunBalls=" + oneRunBalls +
