@@ -1,9 +1,5 @@
 package com.game.cricket;
 
-import com.game.cricket.models.BatsmanSelector;
-import com.game.cricket.models.BatsmanSelectorInterface;
-import com.game.cricket.models.Bowler;
-
 import java.util.Scanner;
 
 

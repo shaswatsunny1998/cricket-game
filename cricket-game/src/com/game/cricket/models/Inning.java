@@ -1,8 +1,8 @@
 package com.game.cricket.models;
 
+import com.game.cricket.Match;
 import com.game.cricket.util.RandomGenerator;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Inning {
@@ -16,10 +16,6 @@ public class Inning {
 
     public void singleInning(Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
         RandomGenerator randomGenerator = new RandomGenerator();
-
-
-        //Immutable List
-        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 6, -1);
 
         int totalScoreTeam = batting_team.getTotal_score();
 
@@ -37,8 +33,9 @@ public class Inning {
         int currOver = 0;
 
         Over over = new Over();
+        currOver++;
 
-        while (currBatsman <= Team.TEAM_SIZE - 1) {
+        while (currBatsman <= Team.TEAM_SIZE - 1 && currOver<Match.NUM_OF_OVERS) {
             System.out.println("Initial On Batting Side : " + batting.getFirstName());
             System.out.println("Initial On Running Side : " + running.getFirstName());
 
@@ -49,16 +46,18 @@ public class Inning {
             if (over.getCurrBall() < Over.NUM_OF_BALLS) {
 
             } else {
+                currOver++;
+                //System.out.println("Current Over: "+currOver);
                 over = new Over();
             }
 
 
             for (int i = bowler.getScore().getCurrBall(); i < Over.NUM_OF_BALLS; ++i) {
 
-                int index = randomGenerator.getRandomRun(list.size());
-                int int_random = list.get(index);
+                //Batsman has high Scoring Probability.
+                int int_random = getRun(batting);
 
-                Ball ball=new Ball(int_random);
+                Ball ball = new Ball(int_random);
                 over.setCurrBall(over.getCurrBall() + 1);
                 over.getBalls().add(ball);
 
@@ -84,6 +83,7 @@ public class Inning {
                     if (isChasing) {
                         if (batting_team.getTotal_score() > chaseScore) {
                             over.setTotalRun();
+                            over.setPlayerId(bowler.getPlayerId());
                             overs.add(over);
                             return;
                         }
@@ -108,7 +108,7 @@ public class Inning {
                     running.getScore().getTotalRun();
 
                     //Indexing is Odd.
-                    over.addWicket(batting.getFirstName()+" "+batting.getLastName(),bowler.getFirstName()+" "+bowler.getLastName(),over.getCurrBall());
+                    over.addWicket(batting.getFirstName() + " " + batting.getLastName(), bowler.getFirstName() + " " + bowler.getLastName(), over.getCurrBall());
 
                     currBatsman++;
 
@@ -134,6 +134,7 @@ public class Inning {
                 running = neutral;
             }
             if (currBatsman > Team.TEAM_SIZE - 1) {
+                //System.out.println("Match Over");
                 over.setTotalRun();
                 over.setPlayerId(bowler.getPlayerId());
                 overs.add(over);
@@ -141,14 +142,16 @@ public class Inning {
         }
 
     }
-
-//    public int getRun(Player player) {
-//        if (player instanceof Batsman) {
-//            Batsman batsman = (Batsman) player;
-//            batsman.getRun();
-//        }
-//
-//
-//    }
+    public int getRun(Player player) {
+        int run = 0;
+        if (player instanceof Batsman) {
+            Batsman batsman = (Batsman) player;
+            run = batsman.getRun();
+        } else {
+            Bowler bowler = (Bowler) player;
+            run = bowler.getRun();
+        }
+        return run;
+    }
 
 }

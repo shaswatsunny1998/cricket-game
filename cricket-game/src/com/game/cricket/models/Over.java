@@ -121,8 +121,8 @@ public class Over {
         this.wickets = wickets;
     }
 
-    public void addWicket(String batsman , String bowler,int ballNo){
-        wickets.add(new Wicket(batsman,bowler,ballNo));
+    public void addWicket(String batsman, String bowler, int ballNo) {
+        wickets.add(new Wicket(batsman, bowler, ballNo));
     }
 
     public void setRun(int run) {

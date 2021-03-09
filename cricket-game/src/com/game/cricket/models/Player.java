@@ -1,14 +1,14 @@
 package com.game.cricket.models;
 
-public abstract class Player{
+public abstract class Player {
     private int playerId;
     private String firstName;
     private String lastName;
     private int age;
-    private String type=null;
-    private Score score=new Score();
+    private String type = null;
+    private Score score = new Score();
 
-    private static int ID=0;
+    private static int ID = 0;
 
     public Player() {
     }
@@ -24,17 +24,17 @@ public abstract class Player{
         this.lastName = lastName;
         this.age = age;
         this.type = type;
-        this.playerId=ID;
+        this.playerId = ID;
         ID++;
 
     }
 
-    public Player(String firstName, String lastName, int age, String type,int strikeRate) {
+    public Player(String firstName, String lastName, int age, String type, int strikeRate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.type = type;
-        this.playerId=ID;
+        this.playerId = ID;
         score.setStrikeRate(strikeRate);
         ID++;
     }

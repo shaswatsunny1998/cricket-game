@@ -2,7 +2,6 @@ package com.game.cricket.models;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Team {
 
@@ -14,7 +13,6 @@ public class Team {
     public static final int TEAM_SIZE = 3;
 
 
-
     public Team(String teamId, String teamName) {
         this.teamId = teamId;
         this.teamName = teamName;
@@ -23,8 +21,8 @@ public class Team {
     }
 
 
-    public boolean isLastPlayer(int index){
-        if(index==TEAM_SIZE)
+    public boolean isLastPlayer(int index) {
+        if (index == TEAM_SIZE)
             return true;
         return false;
 

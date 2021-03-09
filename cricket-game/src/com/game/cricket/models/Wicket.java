@@ -6,10 +6,10 @@ public class Wicket {
     private String type;
     private int ballNo;
 
-    public Wicket(String batsman, String bowler,int ballNo) {
+    public Wicket(String batsman, String bowler, int ballNo) {
         this.batsman = batsman;
         this.bowler = bowler;
-        this.ballNo=ballNo;
+        this.ballNo = ballNo;
         this.type = "Bowled";
     }
 
