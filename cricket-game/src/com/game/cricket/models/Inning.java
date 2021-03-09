@@ -1,7 +1,6 @@
 package com.game.cricket.models;
 
 import com.game.cricket.Match;
-import com.game.cricket.util.RandomGenerator;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ public class Inning {
     }
 
     public void singleInning(Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
-        RandomGenerator randomGenerator = new RandomGenerator();
 
         int totalScoreTeam = batting_team.getTotal_score();
 
@@ -33,9 +31,8 @@ public class Inning {
         int currOver = 0;
 
         Over over = new Over();
-        currOver++;
 
-        while (currBatsman <= Team.TEAM_SIZE - 1 && currOver<Match.NUM_OF_OVERS) {
+        while (currBatsman <= Team.TEAM_SIZE - 1 && currOver < Match.NUM_OF_OVERS) {
             System.out.println("Initial On Batting Side : " + batting.getFirstName());
             System.out.println("Initial On Running Side : " + running.getFirstName());
 
@@ -46,8 +43,6 @@ public class Inning {
             if (over.getCurrBall() < Over.NUM_OF_BALLS) {
 
             } else {
-                currOver++;
-                //System.out.println("Current Over: "+currOver);
                 over = new Over();
             }
 
@@ -119,6 +114,13 @@ public class Inning {
                 }
 
             }
+
+            if (bowler.getScore().getCurrBall() == Over.NUM_OF_BALLS && currBatsman==Team.TEAM_SIZE) {
+                over.setTotalRun();
+                over.setPlayerId(bowler.getPlayerId());
+                overs.add(over);
+                return;
+            }
             if (bowler.getScore().getCurrBall() == Over.NUM_OF_BALLS) {
                 System.out.println("Over Changing---------");
 
@@ -132,16 +134,18 @@ public class Inning {
                 neutral = batting;
                 batting = running;
                 running = neutral;
+                currOver++;
             }
             if (currBatsman > Team.TEAM_SIZE - 1) {
-                //System.out.println("Match Over");
                 over.setTotalRun();
                 over.setPlayerId(bowler.getPlayerId());
                 overs.add(over);
+                break;
             }
         }
-
+        System.out.println("Current Batsman: "+currBatsman);
     }
+
     public int getRun(Player player) {
         int run = 0;
         if (player instanceof Batsman) {

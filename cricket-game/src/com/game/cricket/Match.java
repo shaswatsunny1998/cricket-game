@@ -17,7 +17,7 @@ public class Match {
 
     private FinalBoard finalBoard;
 
-    public static final int NUM_OF_OVERS = 3;
+    public static final int NUM_OF_OVERS = 4;
 
     private List<Over> firstHalfOvers;
     private List<Over> secondHalfOvers;
@@ -29,8 +29,24 @@ public class Match {
     }
 
     public void initializeOvers() {
-        firstHalfOvers = new ArrayList<Over>();
-        secondHalfOvers = new ArrayList<Over>();
+        this.firstHalfOvers = new ArrayList<Over>();
+        this.secondHalfOvers = new ArrayList<Over>();
+    }
+
+    public List<Over> getFirstHalfOvers() {
+        return firstHalfOvers;
+    }
+
+    public void setFirstHalfOvers(List<Over> firstHalfOvers) {
+        this.firstHalfOvers = firstHalfOvers;
+    }
+
+    public List<Over> getSecondHalfOvers() {
+        return secondHalfOvers;
+    }
+
+    public void setSecondHalfOvers(List<Over> secondHalfOvers) {
+        this.secondHalfOvers = secondHalfOvers;
     }
 
     public Match(String matchId, String matchName) {

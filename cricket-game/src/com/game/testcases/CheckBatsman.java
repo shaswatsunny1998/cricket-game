@@ -35,7 +35,6 @@ public class CheckBatsman {
     @Test
     public void checkBatsman(){
         Player player = new Batsman("Shaswat","Srivastava",22);
-        System.out.println(player);
     }
 
 
