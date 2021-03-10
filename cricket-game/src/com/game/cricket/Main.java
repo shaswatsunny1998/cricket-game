@@ -1,5 +1,7 @@
 package com.game.cricket;
 
+import com.game.cricket.services.FinalBoard;
+
 import java.util.Scanner;
 
 
@@ -17,6 +19,9 @@ public class Main {
         match.addAllTeams(scan);
         System.out.println(match);
         match.start();
+
+        FinalBoard finalBoard=new FinalBoard(match);
+        finalBoard.result();
         System.out.println(match);
     }
 

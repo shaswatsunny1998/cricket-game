@@ -15,7 +15,7 @@ public class Match {
     private Team team1;
     private Team team2;
 
-    private FinalBoard finalBoard;
+    //private FinalBoard finalBoard;
 
     public static final int NUM_OF_OVERS = 4;
 
@@ -93,8 +93,8 @@ public class Match {
         inning.singleInning(team2, team1, team1.getTotal_score(), this.secondHalfOvers, true);
         System.out.println("Score by Team 2: " + team2.getTotal_score());
         System.out.println(secondHalfOvers);
-        FinalBoard finalBoard = new FinalBoard(this.team1, this.team2);
-        finalBoard.result();
+        //FinalBoard finalBoard = new FinalBoard(this.team1, this.team2);
+        //finalBoard.result();
     }
 
 
