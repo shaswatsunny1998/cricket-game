@@ -13,6 +13,23 @@ public class Wicket {
         this.type = "Bowled";
     }
 
+
+    public String getBatsman() {
+        return batsman;
+    }
+
+    public String getBowler() {
+        return bowler;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public int getBallNo() {
+        return ballNo;
+    }
+
     @Override
     public String toString() {
         return "Wicket{" +

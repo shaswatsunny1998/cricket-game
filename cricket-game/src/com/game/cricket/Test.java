@@ -1,15 +1,15 @@
 package com.game.cricket;
 
-import com.game.cricket.models.Batsman;
-import com.game.cricket.models.Player;
+import com.game.cricket.services.FinalBoard;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Test {
     public static void main(String[] args) {
-        Player player = new Batsman("Shaswat","Srivastava",22);
-        Player player1=new Batsman("Amitesh","Srivastava",22);
-        Match match=new Match();
-
-        System.out.println(player);
-        System.out.println(player1);
+        FinalBoard finalBoard = new FinalBoard();
+        finalBoard.addMatch();
     }
 }

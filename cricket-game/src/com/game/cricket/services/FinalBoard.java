@@ -1,6 +1,7 @@
 package com.game.cricket.services;
 
 import com.game.cricket.Match;
+import com.game.cricket.doa.*;
 import com.game.cricket.models.Player;
 import com.game.cricket.models.Team;
 
@@ -60,6 +61,55 @@ public class FinalBoard {
 
     public int wicketsDownSecondTeam() {
         return wicketsDown(this.secondTeam);
+    }
+
+
+    public void addMatch(){
+        MatchDoa doa = new MatchDoa();
+        doa.addMatch(this.match.getMatchId(),this.match.getMatchName());
+    }
+
+    public void addPlayers(){
+        PlayersDoa doa = new PlayersDoa();
+        doa.addPlayers(this.firstTeam,this.secondTeam);
+    }
+
+    public void addTeams(){
+        TeamDoa doa = new TeamDoa();
+        doa.addTeams(this.match);
+    }
+    public void addBattingScores(){
+        BatScoreDoa doa = new BatScoreDoa();
+        doa.addBattingScores(this.match);
+    }
+
+    public void addBowlerScores(){
+        BallScoreDoa doa = new BallScoreDoa();
+        doa.addBowlingScores(this.match);
+    }
+    public void addOvers(){
+        OversDoa doa = new OversDoa();
+        doa.addOvers(this.match);
+    }
+
+    public void addWickets(){
+        WicketDoa doa =new WicketDoa();
+        doa.addWickets(this.match);
+    }
+
+    public void addBalls(){
+        BallsDoa doa = new BallsDoa();
+        doa.addBalls(this.match);
+    }
+    public void addDetails(){
+        addPlayers();
+        addTeams();
+        addBattingScores();
+        addBowlerScores();
+        addOvers();
+        addWickets();
+        addBalls();
+
     }
 
 

@@ -53,6 +53,9 @@ public class Inning {
                 int int_random = getRun(batting);
 
                 Ball ball = new Ball(int_random);
+                ball.setBatsmanId(batting.getPlayerId());
+                ball.setBowlerId(bowler.getPlayerId());
+
                 over.setCurrBall(over.getCurrBall() + 1);
                 over.getBalls().add(ball);
 
