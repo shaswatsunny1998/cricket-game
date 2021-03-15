@@ -11,5 +11,10 @@
 
 ## Week 2 assignment
 
-- [ ] ScoreBoard Should be there.
-- [ ] Define each player as batsman and bowler and return high run prob for batsman 
+- [X] ScoreBoard Should be there.
+- [X] Define each player as batsman and bowler and return high run prob for batsman 
+
+## Week 3 assignment
+
+- [ ] Use jdbc for mySql to store relevant info in db
+- [ ] Write methods to retrieve said
