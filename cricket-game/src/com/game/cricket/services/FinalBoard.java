@@ -25,11 +25,12 @@ public class FinalBoard {
         this.secondTeam = this.match.getTeam2();
     }
 
+
     public void result() {
         if (secondTeam.getTotal_score() > firstTeam.getTotal_score()) {
-            System.out.println("Team 2 WON");
+            System.out.println("Team 2 WON : "+secondTeam.getTeamName());
         } else {
-            System.out.println("Team 1 WON");
+            System.out.println("Team 1 WON : "+firstTeam.getTeamName());
         }
     }
 
@@ -66,12 +67,17 @@ public class FinalBoard {
 
     public void addMatch(){
         MatchDoa doa = new MatchDoa();
-        doa.addMatch(this.match.getMatchId(),this.match.getMatchName());
+        doa.addMatch(this.match.getMatchId(),this.match.getMatchName(),match.getTeam1().getTeamId(),match.getTeam2().getTeamId());
     }
 
     public void addPlayers(){
         PlayersDoa doa = new PlayersDoa();
         doa.addPlayers(this.firstTeam,this.secondTeam);
+    }
+
+    public void addTeamPlayers(){
+        TeamPlayerDoa teamPlayerDoa = new TeamPlayerDoa();
+        teamPlayerDoa.addTeamPlayer(this.firstTeam,this.secondTeam);
     }
 
     public void addTeams(){
@@ -101,15 +107,55 @@ public class FinalBoard {
         BallsDoa doa = new BallsDoa();
         doa.addBalls(this.match);
     }
+
+    public void addScoreBoard(){
+        ScoreBoardDoa doa = new ScoreBoardDoa();
+
+        boolean draw=false;
+        String winning ,losing;
+        int winWicket,loseWicket;
+        int winScore,loseScore;
+        if (secondTeam.getTotal_score() > firstTeam.getTotal_score()) {
+
+            winning=secondTeam.getTeamName();
+            losing=firstTeam.getTeamName();
+            loseWicket =wicketsDownFirstTeam();
+            winWicket = wicketsDownSecondTeam();
+            winScore = getRunsBySecondTeam();
+            loseScore= getRunsByFirstTeam();
+
+        } else if(secondTeam.getTotal_score() < firstTeam.getTotal_score()){
+            losing=secondTeam.getTeamName();
+            winning=firstTeam.getTeamName();
+            winWicket =wicketsDownFirstTeam();
+            loseWicket = wicketsDownSecondTeam();
+            loseScore = getRunsBySecondTeam();
+            winScore= getRunsByFirstTeam();
+        }
+        else{
+            winning=secondTeam.getTeamName();
+            losing=firstTeam.getTeamName();
+            draw=true;
+            loseWicket =wicketsDownFirstTeam();
+            winWicket = wicketsDownSecondTeam();
+            winScore = getRunsBySecondTeam();
+            loseScore= getRunsByFirstTeam();
+        }
+
+        doa.addScoreBoard(this.match.getMatchId(),winning,losing,winScore,loseScore,winWicket,loseWicket,draw);
+    }
+
     public void addDetails(){
-        addPlayers();
         addTeams();
+        addMatch();
+        addTeamPlayers();
+        addPlayers();
         addBattingScores();
         addBowlerScores();
         addOvers();
         addWickets();
         addBalls();
-
+        addScoreBoard();
     }
 
 

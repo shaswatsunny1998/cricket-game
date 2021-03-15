@@ -1,21 +1,26 @@
 package com.game.cricket.doa;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-public class MatchDoa {
-
-    public void addMatch(String matchId, String matchName, String firstTeamId, String secondTeamId) {
+public class ScoreBoardDoa {
+    public void addScoreBoard(String matchId, String winningTeam, String losingTeam, int winScore, int loseScore, int wicketWin, int wicketLose, boolean draw) {
         try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
 //            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
+
             Connection conn = SingletonConnection.getInstance().getConn();
-            String sql = "INSERT INTO `cricket`.`match` VALUES (?,?,?,?)";
+            String sql = "INSERT INTO `cricket`.`scoreboard` VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, Integer.parseInt(matchId));
-            pstmt.setString(2, matchName);
-            pstmt.setInt(3, Integer.parseInt(firstTeamId));
-            pstmt.setInt(4, Integer.parseInt(secondTeamId));
+            pstmt.setString(2, winningTeam);
+            pstmt.setString(3, losingTeam);
+            pstmt.setInt(4, winScore);
+            pstmt.setInt(5, loseScore);
+            pstmt.setInt(6, wicketWin);
+            pstmt.setInt(7, wicketLose);
+            pstmt.setBoolean(8, draw);
             pstmt.execute();
         } catch (Exception e) {
             System.out.println(e);

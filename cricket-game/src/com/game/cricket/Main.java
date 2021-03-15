@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Match match = new Match("123", "Ind vs Aus");
+        Match match = new Match("1234", "Ind vs Aus");
         ClearData clearData=new ClearData();
         clearData.eraseData();
         Scanner scan = new Scanner(System.in);
@@ -23,15 +23,18 @@ public class Main {
         match.start();
         FinalBoard finalBoard = new FinalBoard(match);
         finalBoard.result();
+//        finalBoard.addTeams();
 //        finalBoard.addMatch();
 //
+//
+//        finalBoard.addTeamPlayers();
 //        finalBoard.addPlayers();
-//        finalBoard.addTeams();
 //        finalBoard.addBattingScores();
 //        finalBoard.addBowlerScores();
 //        finalBoard.addOvers();
 //        finalBoard.addWickets();
 //        finalBoard.addBalls();
+//        finalBoard.addScoreBoard();
         finalBoard.addDetails();
 
         System.out.println(match);

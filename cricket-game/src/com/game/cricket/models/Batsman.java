@@ -10,9 +10,8 @@ public class Batsman extends Player {
     private static RandomGenerator randomGenerator = new RandomGenerator();
 
     //Wicket Probability - 1/12
-    private static List<Runs> list = Arrays.asList(Runs.ZERORUN, Runs.ONERUN, Runs.TWORUN, Runs.THREERUN,
-            Runs.FOURRUN, Runs.SIXRUN, Runs.WICKET, Runs.ONERUN, Runs.TWORUN, Runs.THREERUN,
-            Runs.FOURRUN, Runs.SIXRUN);
+    private static List<Runs> list = Arrays.asList(Runs.ZERORUN, Runs.FOURRUN, Runs.SIXRUN, Runs.WICKET, Runs.ONERUN,
+            Runs.TWORUN, Runs.THREERUN, Runs.FOURRUN, Runs.SIXRUN);
 
     public Batsman(String firstName, String lastName, int age) {
         super(firstName, lastName, age, "Batsman", 34);

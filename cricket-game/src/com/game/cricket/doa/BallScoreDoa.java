@@ -10,8 +10,9 @@ import java.sql.PreparedStatement;
 public class BallScoreDoa {
     public void addBowlingScores(Match match){
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
+            Connection conn = SingletonConnection.getInstance().getConn();
             String sql = "INSERT INTO `cricket`.`bowlingscores` VALUES (?,?,?,?,?,?,?,?,?)";
             for(int i=0;i<match.getTeam1().getPlayers().size();++i){
                 Player player = match.getTeam1().getPlayers().get(i);

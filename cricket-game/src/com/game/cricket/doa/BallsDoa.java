@@ -12,8 +12,9 @@ public class BallsDoa {
     public void addBalls(Match match) {
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
+            Connection conn = SingletonConnection.getInstance().getConn();
             String sql = "INSERT INTO `cricket`.`balls` VALUES (?,?,?,?,?,?)";
             for (int i = 0; i < match.getFirstHalfOvers().size(); ++i) {
                 Over over = match.getFirstHalfOvers().get(i);

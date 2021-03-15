@@ -106,7 +106,7 @@ public class Inning {
                     running.getScore().getTotalRun();
 
                     //Indexing is Odd.
-                    over.addWicket(batting.getFirstName() + " " + batting.getLastName(), bowler.getFirstName() + " " + bowler.getLastName(), over.getCurrBall());
+                    over.addWicket(batting.getPlayerId(), bowler.getPlayerId(), over.getCurrBall());
 
                     currBatsman++;
 
