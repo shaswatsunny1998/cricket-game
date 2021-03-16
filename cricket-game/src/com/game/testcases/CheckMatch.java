@@ -1,11 +1,13 @@
 package com.game.testcases;
 
 import com.game.cricket.Match;
+import com.game.cricket.TeamFactory;
 import com.game.cricket.models.Over;
 import com.game.cricket.models.Player;
 import com.game.cricket.models.Team;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -40,9 +42,11 @@ public class CheckMatch {
 
     @Test
     public void checkScores() {
-        Match match = new Match("123", "Ind vs Aus");
-        Scanner scan = new Scanner(System.in);
-        match.addAllTeams(scan);
+        TeamFactory factory = new TeamFactory();
+        Match match = new Match(String.valueOf("0"), "Ind vs Aus", "Bangalore", new Date());
+        Team indian = factory.getIndianTeam();
+        Team aus = factory.getAustraliaTeam();
+        match.addTeams(indian,aus);
         match.start();
         int firstHalf = getAllOverScores(match.getFirstHalfOvers());
         int secondHalf = getAllOverScores(match.getSecondHalfOvers());

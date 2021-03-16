@@ -1,43 +1,62 @@
 package com.game.cricket;
 
 import com.game.cricket.doa.ClearData;
+import com.game.cricket.models.Team;
 import com.game.cricket.services.FinalBoard;
+import com.game.cricket.util.RandomGenerator;
 
+import java.util.Date;
 import java.util.Scanner;
 
 
 public class Main {
 
 
+    // ClearData clearData=new ClearData();
+    // clearData.clearAllData();
+    // clearData.eraseData();
+    // Scanner scan = new Scanner(System.in);
+    // match.addAllTeams(scan);
+
     public static Scanner scan = new Scanner(System.in);
 
 
     public static void main(String[] args) {
 
-        Match match = new Match("1234", "Ind vs Aus");
-        ClearData clearData=new ClearData();
-        clearData.eraseData();
-        Scanner scan = new Scanner(System.in);
-        match.addAllTeams(scan);
-        System.out.println(match);
-        match.start();
-        FinalBoard finalBoard = new FinalBoard(match);
-        finalBoard.result();
-//        finalBoard.addTeams();
-//        finalBoard.addMatch();
-//
-//
-//        finalBoard.addTeamPlayers();
-//        finalBoard.addPlayers();
-//        finalBoard.addBattingScores();
-//        finalBoard.addBowlerScores();
-//        finalBoard.addOvers();
-//        finalBoard.addWickets();
-//        finalBoard.addBalls();
-//        finalBoard.addScoreBoard();
-        finalBoard.addDetails();
 
-        System.out.println(match);
+        TeamFactory factory = new TeamFactory();
+
+//        ClearData clearData=new ClearData();
+//        clearData.eraseData();
+
+//        //factory.addTeamsDatabase();
+//
+//
+        Team indian = factory.getIndianTeam();
+        Team aus = factory.getAustraliaTeam();
+        RandomGenerator randomGenerator = new RandomGenerator();
+
+
+        for(int i=3;i<5;++i){
+            indian.setTotal_score(0);
+            aus.setTotal_score(0);
+            indian.resetScores();
+            aus.resetScores();
+
+            Match match = new Match(String.valueOf(i), "Ind vs Aus", "Bangalore", new Date());
+            if(randomGenerator.getRandomCoin()==0)
+                match.addTeams(indian, aus);
+            else
+                match.addTeams(aus,indian);
+            System.out.println(match);
+            match.start();
+            FinalBoard finalBoard = new FinalBoard(match);
+            finalBoard.result();
+            finalBoard.addDetails();
+
+            System.out.println(match);
+
+        }
     }
 
 }

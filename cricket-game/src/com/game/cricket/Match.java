@@ -2,22 +2,21 @@ package com.game.cricket;
 
 import com.game.cricket.models.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Match {
 
     private String matchId;
     private String matchName;
+    private String venue;
+    private Date matchDate;
 
     private Team team1;
     private Team team2;
 
     //private FinalBoard finalBoard;
 
-    public static final int NUM_OF_OVERS = 4;
+    public static final int NUM_OF_OVERS = 6;
 
     private List<Over> firstHalfOvers;
     private List<Over> secondHalfOvers;
@@ -26,6 +25,18 @@ public class Match {
 
 
     public Match() {
+    }
+
+    public Match(String matchId, String matchName, String venue, Date matchDate) {
+        this.matchId = matchId;
+        this.matchName = matchName;
+        this.venue = venue;
+        this.matchDate = matchDate;
+    }
+
+    public void addTeams(Team team1,Team team2){
+        this.team1=team1;
+        this.team2=team2;
     }
 
     public void initializeOvers() {
@@ -49,11 +60,7 @@ public class Match {
         this.secondHalfOvers = secondHalfOvers;
     }
 
-    public Match(String matchId, String matchName) {
-        this.matchId = matchId;
-        this.matchName = matchName;
-    }
-
+/*
     public void addAllTeams(Scanner scan) {
         addFirstTeam(scan);
         addSecondTeam(scan);
@@ -82,6 +89,8 @@ public class Match {
         this.team2 = team;
     }
 
+ */
+
 
     public void start() {
         initializeOvers();
@@ -93,10 +102,23 @@ public class Match {
         inning.singleInning(team2, team1, team1.getTotal_score(), this.secondHalfOvers, true);
         System.out.println("Score by Team 2: " + team2.getTotal_score());
         System.out.println(secondHalfOvers);
-        //FinalBoard finalBoard = new FinalBoard(this.team1, this.team2);
-        //finalBoard.result();
     }
 
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public Date getMatchDate() {
+        return matchDate;
+    }
+
+    public void setMatchDate(Date matchDate) {
+        this.matchDate = matchDate;
+    }
 
     public String getMatchId() {
         return matchId;

@@ -39,6 +39,9 @@ public abstract class Player {
         ID++;
     }
 
+
+
+
     public int getPlayerId() {
         return playerId;
     }

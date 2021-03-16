@@ -34,11 +34,9 @@ public class Score {
     public Score() {
     }
 
-    public Score(int position) {
-        this.position = position;
+    public Score(int strikeRate) {
+        this.strikeRate = strikeRate;
     }
-
-
 
     // Batsman methods
     public int getTotalRun() {
@@ -64,6 +62,14 @@ public class Score {
     public int getTotalBallsPlayed() {
         return this.getTwoRun() + this.getOneRun() + this.getThreeRun() + this.getFourRun() +
                 this.getSixRun() + this.getDotRun();
+    }
+
+
+    public double getTotalStrikeRate(){
+        if(getTotalRun()==0)
+            return 0.0;
+        BigDecimal decimal = new BigDecimal((getTotalRun()*100.0)/getTotalBallsPlayed()).setScale(2, BigDecimal.ROUND_FLOOR);
+        return decimal.doubleValue();
     }
 
 
@@ -111,6 +117,7 @@ public class Score {
     public void setStrikeRate(int strikeRate) {
         this.strikeRate = strikeRate;
     }
+
 
     public int getPosition() {
         return position;

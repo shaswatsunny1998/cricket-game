@@ -67,23 +67,9 @@ public class FinalBoard {
 
     public void addMatch(){
         MatchDoa doa = new MatchDoa();
-        doa.addMatch(this.match.getMatchId(),this.match.getMatchName(),match.getTeam1().getTeamId(),match.getTeam2().getTeamId());
+        doa.addMatch(this.match);
     }
 
-    public void addPlayers(){
-        PlayersDoa doa = new PlayersDoa();
-        doa.addPlayers(this.firstTeam,this.secondTeam);
-    }
-
-    public void addTeamPlayers(){
-        TeamPlayerDoa teamPlayerDoa = new TeamPlayerDoa();
-        teamPlayerDoa.addTeamPlayer(this.firstTeam,this.secondTeam);
-    }
-
-    public void addTeams(){
-        TeamDoa doa = new TeamDoa();
-        doa.addTeams(this.match);
-    }
     public void addBattingScores(){
         BatScoreDoa doa = new BatScoreDoa();
         doa.addBattingScores(this.match);
@@ -145,17 +131,20 @@ public class FinalBoard {
         doa.addScoreBoard(this.match.getMatchId(),winning,losing,winScore,loseScore,winWicket,loseWicket,draw);
     }
 
+    public void addInning(){
+        HalfInningDoa halfInningDoa = new HalfInningDoa();
+        halfInningDoa.addHalfInningDetails(this.match);
+    }
+
     public void addDetails(){
-        addTeams();
         addMatch();
-        addTeamPlayers();
-        addPlayers();
         addBattingScores();
         addBowlerScores();
-        addOvers();
+        //addOvers();
         addWickets();
         addBalls();
         addScoreBoard();
+        addInning();
     }
 
 

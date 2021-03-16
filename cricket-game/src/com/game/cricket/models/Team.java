@@ -27,6 +27,18 @@ public class Team {
         return false;
 
     }
+
+
+    public void resetScores(){
+        for (Player player:this.players) {
+            if(player instanceof Batsman)
+                player.setScore(new Score(34));
+            else
+                player.setScore(new Score());
+        }
+    }
+
+
 /*
     public Player addPlayer(Scanner scan) {
         System.out.println("---------");

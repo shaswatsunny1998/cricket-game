@@ -5,7 +5,6 @@ import com.game.cricket.models.Over;
 import com.game.cricket.models.Wicket;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
 public class WicketDoa {
@@ -14,19 +13,19 @@ public class WicketDoa {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
 //            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
             Connection conn = SingletonConnection.getInstance().getConn();
-            String sql = "INSERT INTO `cricket`.`wickets` VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO `cricket`.`wickets` VALUES (?,?,?,?,?,?,?)";
             for (int i = 0; i < match.getFirstHalfOvers().size(); ++i) {
                 Over over = match.getFirstHalfOvers().get(i);
                 for (int j = 0; j < over.getWickets().size(); ++j) {
                     Wicket wicket = over.getWickets().get(j);
                     PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setInt(1, (i + 1));
-                    pstmt.setInt(1, (i + 1));
-                    pstmt.setBoolean(2, true);
-                    pstmt.setInt(3, wicket.getBallNo());
-                    pstmt.setInt(4, wicket.getBatsman());
-                    pstmt.setInt(5, wicket.getBowler());
-                    pstmt.setString(6, wicket.getType());
+                    pstmt.setInt(1, Integer.parseInt(match.getMatchId()));
+                    pstmt.setInt(2, (i + 1));
+                    pstmt.setBoolean(3, true);
+                    pstmt.setInt(4, wicket.getBallNo());
+                    pstmt.setInt(5, wicket.getBatsman());
+                    pstmt.setInt(6, wicket.getBowler());
+                    pstmt.setString(7, wicket.getType());
                     pstmt.execute();
                 }
             }
@@ -36,12 +35,13 @@ public class WicketDoa {
                 for (int j = 0; j < over.getWickets().size(); ++j) {
                     Wicket wicket = over.getWickets().get(j);
                     PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setInt(1, (i + 1));
-                    pstmt.setBoolean(2, false);
-                    pstmt.setInt(3, wicket.getBallNo());
-                    pstmt.setInt(4, wicket.getBatsman());
-                    pstmt.setInt(5, wicket.getBowler());
-                    pstmt.setString(6, wicket.getType());
+                    pstmt.setInt(1, Integer.parseInt(match.getMatchId()));
+                    pstmt.setInt(2, (i + 1));
+                    pstmt.setBoolean(3, false);
+                    pstmt.setInt(4, wicket.getBallNo());
+                    pstmt.setInt(5, wicket.getBatsman());
+                    pstmt.setInt(6, wicket.getBowler());
+                    pstmt.setString(7, wicket.getType());
                     pstmt.execute();
                 }
             }
