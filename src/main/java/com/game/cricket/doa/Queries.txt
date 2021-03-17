@@ -1,0 +1,7 @@
+Q1. Which team won the match ?
+Q2. Top 3 Batsman in match
+Q3. Top 3 Bowlers in match
+Q4. Which over gives most runs and by which bowler in each half inning.
+Q5. Batsman - No. of 20s , 100s etc.
+Q6. Economy of bowlers.
+Q7.
