@@ -3,15 +3,16 @@ package com.game.cricket.doa;
 import com.game.cricket.Match;
 import com.game.cricket.models.Over;
 import com.game.cricket.models.Wicket;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+
+@Repository
 public class WicketDoa {
     public void addWickets(Match match) {
         try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
             Connection conn = SingletonConnection.getInstance().getConn();
             String sql = "INSERT INTO `cricket`.`wickets` VALUES (?,?,?,?,?,?,?)";
             for (int i = 0; i < match.getFirstHalfOvers().size(); ++i) {
@@ -49,5 +50,25 @@ public class WicketDoa {
             System.out.println(e);
         }
 
+    }
+
+
+    public void addWicket(int matchId, int overNo, boolean firstHalf, int ballNo, int batsmanId, int bowlerId) {
+        Connection conn = SingletonConnection.getInstance().getConn();
+        try {
+
+            String sql = "INSERT INTO `cricket`.`wickets` VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, matchId);
+            pstmt.setInt(2, overNo);
+            pstmt.setBoolean(3, firstHalf);
+            pstmt.setInt(4, ballNo);
+            pstmt.setInt(5, batsmanId);
+            pstmt.setInt(6, bowlerId);
+            pstmt.setString(7, "Bowled");
+            pstmt.execute();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }

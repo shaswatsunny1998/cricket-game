@@ -1,6 +1,8 @@
 package com.game.cricket.services;
 
 import com.game.cricket.doa.PlayersDoa;
+import com.game.cricket.models.Batsman;
+import com.game.cricket.models.Bowler;
 import com.game.cricket.models.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,22 @@ public class PlayerService {
             players.add(playersDoa.getPlayer(playersId.get(i)));
         }
         return players;
+    }
+
+
+    public Player getPlayer(int playerId){
+        return playersDoa.getPlayer(playerId);
+    }
+
+
+
+    public Player addPlayer(Player player){
+        Player player1 = null;
+        if(player instanceof Batsman)
+            player1=playersDoa.addPlayer(new Batsman(player.getPlayerId(),player.getFirstName(),player.getLastName(),player.getAge()));
+        else if(player instanceof Bowler)
+            player1=playersDoa.addPlayer(new Bowler(player.getPlayerId(),player.getFirstName(),player.getLastName(),player.getAge()));
+        return player1;
     }
 
 }

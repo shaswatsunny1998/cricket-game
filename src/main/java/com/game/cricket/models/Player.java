@@ -1,18 +1,36 @@
 package com.game.cricket.models;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 //Way Type.
-@JsonDeserialize(as=Batsman.class)
+//@JsonTypeInfo(use = new JsonTypeInfo.As("type")
+//@JsonSubTypes({
+//        @JsonSubTypes.Type(value = Batsman.class),
+//        @JsonSubTypes.Type(value = Bowler.class),
+//})
+//@JsonDeserialize(as=Batsman.class)
+
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Batsman.class, name = "Batsman"),
+        @JsonSubTypes.Type(value = Bowler.class, name = "Bowler"),
+})
 public abstract class Player {
     private int playerId;
     private String firstName;
     private String lastName;
     //DOB
     private int age;
-    private String type = null;
+    private String type;
     private Score score = new Score();
 
     private static int ID = 0;

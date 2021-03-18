@@ -141,8 +141,8 @@ public class FinalBoard {
         addBattingScores();
         addBowlerScores();
         //addOvers();
-        addWickets();
-        addBalls();
+        //addWickets();
+        //addBalls();
         addScoreBoard();
         addInning();
     }

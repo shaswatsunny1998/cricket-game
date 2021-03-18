@@ -1,10 +1,25 @@
 package com.game.cricket.models;
 
 import com.game.cricket.Match;
+import com.game.cricket.doa.BallsDoa;
+import com.game.cricket.doa.WicketDoa;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+@Service
 public class Inning {
+
+
+    @Autowired
+    BallsDoa ballsDoa;
+
+    @Autowired
+    WicketDoa wicketDoa;
+
     BowlerSelector bowlerSelector;
     BatsmanSelector batsmanSelector;
 
@@ -13,7 +28,7 @@ public class Inning {
         batsmanSelector = new BatsmanSelector();
     }
 
-    public void singleInning(Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
+    public void singleInning(int matchId , Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
 
         int totalScoreTeam = batting_team.getTotal_score();
 
@@ -59,6 +74,10 @@ public class Inning {
                 over.setCurrBall(over.getCurrBall() + 1);
                 over.getBalls().add(ball);
 
+
+                //Balls Added
+                ballsDoa.addBall(matchId,currOver+1,!isChasing,i+1,int_random,batting.getPlayerId(),bowler.getPlayerId());
+
                 if (int_random != -1) {
 
                     totalScoreTeam += int_random;
@@ -100,6 +119,11 @@ public class Inning {
 
                     System.out.println("Out at Ball: " + bowler.getScore().getCurrBall());
                     System.out.println("Out with total run: " + batting.getScore().getTotalRun());
+
+
+                    //Wickets Added
+                    wicketDoa.addWicket(matchId,currOver+1,!isChasing,i+1,batting.getPlayerId(),bowler.getPlayerId());
+
 
                     over.setWicket(over.getWicket() + 1);
 

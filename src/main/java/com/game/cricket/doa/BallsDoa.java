@@ -3,13 +3,14 @@ package com.game.cricket.doa;
 import com.game.cricket.Match;
 import com.game.cricket.models.Ball;
 import com.game.cricket.models.Over;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+@Repository
 public class BallsDoa {
     public void addBalls(Match match) {
-
         try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
 //            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
@@ -49,5 +50,28 @@ public class BallsDoa {
             System.out.println(e);
         }
     }
+
+
+    public void addBall(int matchId,int overNo,boolean firstHalf,int ballNo , int run , int batsmanId, int bowlerId){
+        Connection conn = SingletonConnection.getInstance().getConn();
+        try {
+
+            String sql = "INSERT INTO `cricket`.`balls` VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,matchId);
+            pstmt.setInt(2,overNo);
+            pstmt.setBoolean(3,firstHalf);
+            pstmt.setInt(4,ballNo);
+            pstmt.setInt(5,run);
+            pstmt.setInt(6,batsmanId);
+            pstmt.setInt(7,bowlerId);
+            pstmt.execute();
+        }
+        catch (Exception e ){
+            System.out.println(e);
+        }
+    }
+
+
 
 }

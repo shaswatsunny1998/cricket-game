@@ -36,7 +36,7 @@ public class Main {
 //        RandomGenerator randomGenerator = new RandomGenerator();
 //
 //
-//        for(int i=11;i<13;++i){
+//        for(int i=0;i<1;++i){
 //            indian.setTotal_score(0);
 //            aus.setTotal_score(0);
 //            indian.resetScores();

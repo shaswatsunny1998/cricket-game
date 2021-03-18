@@ -7,6 +7,7 @@ public class Team {
 
     private String teamId;
     private String teamName;
+
     private List<Player> players;
     private int total_score;
 

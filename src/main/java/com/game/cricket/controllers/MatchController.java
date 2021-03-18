@@ -3,10 +3,7 @@ package com.game.cricket.controllers;
 import com.game.cricket.Match;
 import com.game.cricket.MatchTransporter;
 import com.game.cricket.doa.MatchDoa;
-import com.game.cricket.doa.TeamDoa;
-import com.game.cricket.services.FinalBoard;
 import com.game.cricket.services.MatchService;
-import com.game.cricket.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +23,7 @@ public class MatchController {
     MatchTransporter matchTransporter;
 
 
+    // Only controller will contain Response Entity.
     @GetMapping("/{matchId}")
     public Match getMatchDetails(@PathVariable int matchId) {
         return matchDoa.getMatch(matchId);
@@ -38,28 +36,19 @@ public class MatchController {
             , @PathVariable("playerId2") List<Integer> playersId2) {
 
         MatchTransporter.setMatch(matchService.addMatch(match, teamId1, playersId1, teamId2, playersId2));
-        return MatchTransporter.getMatch();
+        return MatchTransporter.getMatch(match.getMatchId());
     }
 
     //Is it stateless ? - not storing client information.
-    @GetMapping("/get")
-    public Match getMatch(){
-        return MatchTransporter.getMatch();
+    @GetMapping("/get/{matchId}")
+    public Match getMatch(@PathVariable int matchId) {
+        return MatchTransporter.getMatch(matchId);
     }
 
-    @GetMapping("/start")
-    public void startMatch(){
-        Match match = MatchTransporter.getMatch();
-        match.start();
-        FinalBoard finalBoard = new FinalBoard(match);
-        finalBoard.result();
-        finalBoard.addDetails();
-        System.out.println(match);
+    @GetMapping("/start/{matchId}")
+    public Match startMatch(@PathVariable int matchId) {
+
+        return matchService.startMatch(matchId);
     }
-
-
-
-
-
 
 }

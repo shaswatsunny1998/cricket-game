@@ -28,7 +28,5 @@ public class HalfInningDoa {
             System.out.println(e);
         }
 
-
-
     }
 }
