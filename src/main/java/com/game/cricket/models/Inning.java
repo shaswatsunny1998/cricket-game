@@ -5,27 +5,16 @@ import com.game.cricket.doa.BallScoreDoa;
 import com.game.cricket.doa.BallsDoa;
 import com.game.cricket.doa.BatScoreDoa;
 import com.game.cricket.doa.WicketDoa;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
-@Service
 public class Inning {
 
-
-    @Autowired
-    BallsDoa ballsDoa;
-
-    @Autowired
-    WicketDoa wicketDoa;
-
-    @Autowired
-    BatScoreDoa batScoreDoa;
-
-    @Autowired
-    BallScoreDoa ballScoreDoa;
+    BallsDoa ballsDoa = new BallsDoa();
+    WicketDoa wicketDoa = new WicketDoa();
+    BatScoreDoa batScoreDoa = new BatScoreDoa();
+    BallScoreDoa ballScoreDoa = new BallScoreDoa();
 
 
     BowlerSelector bowlerSelector;
@@ -145,6 +134,9 @@ public class Inning {
 
                     //Bowler Score Added -
                     ballScoreDoa.addBowlingScore(matchId, bowler);
+
+                    //BatScore Added - (Corner case , if the batsman scored 0 run).
+                    batScoreDoa.addBattingScore(matchId, batting);
 
 
                     over.setWicket(over.getWicket() + 1);

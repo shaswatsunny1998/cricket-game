@@ -42,9 +42,6 @@ public class BowlerController {
     }
 
 
-
-
-
     // DON'T NEED THESE CONTROLLERS
     @GetMapping("/wickets")
     public int getWickets(@PathVariable("matchId") int matchId , @PathVariable("playerId") int playerId)

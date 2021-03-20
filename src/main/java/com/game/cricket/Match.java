@@ -3,17 +3,11 @@ package com.game.cricket;
 import com.game.cricket.models.Inning;
 import com.game.cricket.models.Over;
 import com.game.cricket.models.Team;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Component
 public class Match {
 
     private int matchId;
@@ -36,6 +30,7 @@ public class Match {
     public Match() {
     }
 
+
     public Match(int matchId, String matchName, String venue, Date matchDate) {
         this.matchId = matchId;
         this.matchName = matchName;
@@ -43,9 +38,9 @@ public class Match {
         this.matchDate = matchDate;
     }
 
-    public void addTeams(Team team1,Team team2){
-        this.team1=team1;
-        this.team2=team2;
+    public void addTeams(Team team1, Team team2) {
+        this.team1 = team1;
+        this.team2 = team2;
     }
 
     public void initializeOvers() {
@@ -101,17 +96,14 @@ public class Match {
  */
 
 
-    @Autowired
-    Inning inning;
-
     public void start() {
         initializeOvers();
-        //Inning inning = new Inning();
-        inning.singleInning(matchId,team1, team2, 0, this.firstHalfOvers, false);
+        Inning inning = new Inning();
+        inning.singleInning(matchId, team1, team2, 0, this.firstHalfOvers, false);
         System.out.println("The Score to be chased: " + team1.getTotal_score());
         System.out.println(firstHalfOvers);
         System.out.println("--------------------------------");
-        inning.singleInning(matchId,team2, team1, team1.getTotal_score(), this.secondHalfOvers, true);
+        inning.singleInning(matchId, team2, team1, team1.getTotal_score(), this.secondHalfOvers, true);
         System.out.println("Score by Team 2: " + team2.getTotal_score());
         System.out.println(secondHalfOvers);
     }

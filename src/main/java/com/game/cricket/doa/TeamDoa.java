@@ -51,9 +51,6 @@ public class TeamDoa {
 
 
 
-
-
-
     public List<Team> getTeams() {
         List<Team> teams = new ArrayList<Team>();
         try {

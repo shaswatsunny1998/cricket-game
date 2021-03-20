@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/matches")
 @Validated
@@ -26,20 +28,26 @@ public class MatchController {
 
     @PostMapping("/schedule")
     public Match getMatchTeams(@RequestBody MatchScheduler matchScheduler) {
-        MatchTransporter.setMatch(matchService.addMatch(matchScheduler, matchScheduler.getTeamId1(),
-                matchScheduler.getPlayerIds1(), matchScheduler.getTeamId2(), matchScheduler.getPlayerIds2()));
-        return MatchTransporter.getMatch(matchScheduler.getMatchId());
+        Match match = matchService.addMatch(matchScheduler, matchScheduler.getTeamId1(),
+                matchScheduler.getPlayerIds1(), matchScheduler.getTeamId2(), matchScheduler.getPlayerIds2());
+        matchTransporter.setMatch(match.getMatchId(), match);
+        return matchTransporter.getMatch(matchScheduler.getMatchId());
     }
 
     @GetMapping("/get/{matchId}")
     public Match getMatch(@PathVariable int matchId) {
-        return MatchTransporter.getMatch(matchId);
+        return matchTransporter.getMatch(matchId);
     }
 
     @GetMapping("/start/{matchId}")
     public Match startMatch(@PathVariable int matchId) {
 
         return matchService.startMatch(matchId);
+    }
+
+    @GetMapping("/matchTransporter")
+    public Map getMatchTransporter() {
+        return matchTransporter.getMatchMap();
     }
 
 }

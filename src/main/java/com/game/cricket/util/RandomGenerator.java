@@ -1,7 +1,10 @@
 package com.game.cricket.util;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Random;
 
+@Component
 public class RandomGenerator {
 
     Random random = new Random();
