@@ -1,11 +1,12 @@
 package com.game.cricket.doa;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-@Component
+@Repository
 public class ClearData {
 
     public ClearData() {

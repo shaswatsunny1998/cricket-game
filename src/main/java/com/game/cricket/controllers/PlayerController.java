@@ -19,44 +19,25 @@ public class PlayerController {
     @Autowired
     PlayersDoa playersDoa;
 
-
-    @Autowired
-    TeamPlayerDoa teamPlayerDoa;
-
     @Autowired
     PlayerService playerService;
 
 
-    @GetMapping("/listAllPlayers")
+    @GetMapping("/")
     public List<Player> listAllPlayers() {
         return playersDoa.getAllPlayers();
     }
 
-    @GetMapping("/listPlayers/{teamId}")
-    public List<Player> listPlayersByTeam(@PathVariable String teamId) {
-        return playersDoa.getPlayers(Integer.parseInt(teamId));
-    }
-
-//    @PostMapping("addPlayer/{teamid}")
-//    public Player addPlayer(@PathVariable String teamid, @RequestBody Player player) {
-//        teamPlayerDoa.addPlayer(player.getPlayerId(), Integer.parseInt(teamid));
-//        playersDoa.addPlayer(player);
-//        return player;
+//    @GetMapping("/listPlayers/{teamId}")
+//    public List<Player> listPlayersByTeam(@PathVariable String teamId) {
+//        return playersDoa.getPlayers(Integer.parseInt(teamId));
 //    }
+
 
     @PostMapping("/")
     public Player addPlayer(@RequestBody Player player){
         return playerService.addPlayer(player);
     }
-
-    // Can we add Logic for returning HTTP codes.??
-//    @GetMapping("/{playerIds}")
-//    public ResponseEntity<List<Player>> getPlayers(@PathVariable List<Integer> playerIds){
-//        List<Player> players = playerService.getPlayers(playerIds);
-//        if(players!=null)
-//            return ResponseEntity.status(HttpStatus.OK).body(players);
-//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//    }
 
 
     @GetMapping("/{playerId}")

@@ -4,16 +4,49 @@ import com.game.cricket.Match;
 import com.game.cricket.doa.*;
 import com.game.cricket.models.Player;
 import com.game.cricket.models.Team;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class FinalBoard {
     private Match match;
     private Team firstTeam;
     private Team secondTeam;
 
 
+    @Autowired
+    ScoreBoardDoa scoreBoardDoa;
+
+
+    @Autowired
+    HalfInningDoa halfInningDoa;
+
+
+
+
     public FinalBoard() {
     }
 
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    public Team getFirstTeam() {
+        return firstTeam;
+    }
+
+    public void setFirstTeam(Team firstTeam) {
+        this.firstTeam = firstTeam;
+    }
+
+    public Team getSecondTeam() {
+        return secondTeam;
+    }
+
+    public void setSecondTeam(Team secondTeam) {
+        this.secondTeam = secondTeam;
+    }
 
     public FinalBoard(Match match) {
         this.match = match;
@@ -65,37 +98,7 @@ public class FinalBoard {
     }
 
 
-    public void addMatch(){
-        MatchDoa doa = new MatchDoa();
-        doa.addMatch(this.match);
-    }
-
-    public void addBattingScores(){
-        BatScoreDoa doa = new BatScoreDoa();
-        doa.addBattingScores(this.match);
-    }
-
-    public void addBowlerScores(){
-        BallScoreDoa doa = new BallScoreDoa();
-        doa.addBowlingScores(this.match);
-    }
-    public void addOvers(){
-        OversDoa doa = new OversDoa();
-        doa.addOvers(this.match);
-    }
-
-    public void addWickets(){
-        WicketDoa doa =new WicketDoa();
-        doa.addWickets(this.match);
-    }
-
-    public void addBalls(){
-        BallsDoa doa = new BallsDoa();
-        doa.addBalls(this.match);
-    }
-
     public void addScoreBoard(){
-        ScoreBoardDoa doa = new ScoreBoardDoa();
 
         boolean draw=false;
         String winning ,losing;
@@ -128,21 +131,14 @@ public class FinalBoard {
             loseScore= getRunsByFirstTeam();
         }
 
-        doa.addScoreBoard(this.match.getMatchId(),winning,losing,winScore,loseScore,winWicket,loseWicket,draw);
+        scoreBoardDoa.addScoreBoard(this.match.getMatchId(),winning,losing,winScore,loseScore,winWicket,loseWicket,draw);
     }
 
     public void addInning(){
-        HalfInningDoa halfInningDoa = new HalfInningDoa();
         halfInningDoa.addHalfInningDetails(this.match);
     }
 
     public void addDetails(){
-        //addMatch();
-        addBattingScores();
-        addBowlerScores();
-        //addOvers();
-        //addWickets();
-        //addBalls();
         addScoreBoard();
         addInning();
     }

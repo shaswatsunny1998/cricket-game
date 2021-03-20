@@ -1,10 +1,13 @@
 package com.game.cricket.doa;
 
 import com.game.cricket.Match;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+
+@Repository
 public class HalfInningDoa {
 
     public void addHalfInningDetails(Match match){

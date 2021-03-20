@@ -1,10 +1,11 @@
 package com.game.cricket.models;
 
 import com.game.cricket.Match;
+import com.game.cricket.doa.BallScoreDoa;
 import com.game.cricket.doa.BallsDoa;
+import com.game.cricket.doa.BatScoreDoa;
 import com.game.cricket.doa.WicketDoa;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,13 @@ public class Inning {
     @Autowired
     WicketDoa wicketDoa;
 
+    @Autowired
+    BatScoreDoa batScoreDoa;
+
+    @Autowired
+    BallScoreDoa ballScoreDoa;
+
+
     BowlerSelector bowlerSelector;
     BatsmanSelector batsmanSelector;
 
@@ -28,7 +36,7 @@ public class Inning {
         batsmanSelector = new BatsmanSelector();
     }
 
-    public void singleInning(int matchId , Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
+    public void singleInning(int matchId, Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
 
         int totalScoreTeam = batting_team.getTotal_score();
 
@@ -76,7 +84,7 @@ public class Inning {
 
 
                 //Balls Added
-                ballsDoa.addBall(matchId,currOver+1,!isChasing,i+1,int_random,batting.getPlayerId(),bowler.getPlayerId());
+                ballsDoa.addBall(matchId, currOver + 1, !isChasing, i + 1, int_random, batting.getPlayerId(), bowler.getPlayerId());
 
                 if (int_random != -1) {
 
@@ -84,8 +92,18 @@ public class Inning {
                     batting_team.setTotal_score(totalScoreTeam);
 
                     batting.getScore().setRun(int_random);
+
+
                     bowler.getScore().setRunBowl(int_random);
                     bowler.getScore().setCurrBall(bowler.getScore().getCurrBall() + 1);
+
+
+                    //Bowler Score Added -
+                    ballScoreDoa.addBowlingScore(matchId, bowler);
+
+                    //Batting Score Added -
+                    batScoreDoa.addBattingScore(matchId, batting);
+
 
                     if (int_random % 2 != 0) {
                         neutral = batting;
@@ -122,7 +140,11 @@ public class Inning {
 
 
                     //Wickets Added
-                    wicketDoa.addWicket(matchId,currOver+1,!isChasing,i+1,batting.getPlayerId(),bowler.getPlayerId());
+                    wicketDoa.addWicket(matchId, currOver + 1, !isChasing, i + 1, batting.getPlayerId(), bowler.getPlayerId());
+
+
+                    //Bowler Score Added -
+                    ballScoreDoa.addBowlingScore(matchId, bowler);
 
 
                     over.setWicket(over.getWicket() + 1);
@@ -142,7 +164,7 @@ public class Inning {
 
             }
 
-            if (bowler.getScore().getCurrBall() == Over.NUM_OF_BALLS && currBatsman==Team.TEAM_SIZE) {
+            if (bowler.getScore().getCurrBall() == Over.NUM_OF_BALLS && currBatsman == Team.TEAM_SIZE) {
                 over.setTotalRun();
                 over.setPlayerId(bowler.getPlayerId());
                 overs.add(over);
@@ -156,6 +178,10 @@ public class Inning {
                 overs.add(over);
 
                 bowler.getScore().setCurrBall(0);
+
+                //Bowler Score Added -
+                ballScoreDoa.addBowlingScore(matchId, bowler);
+
                 currBowler++;
                 currBowler = bowlerSelector.getValidBowler(bowling_players, currBowler);
                 neutral = batting;
@@ -170,7 +196,7 @@ public class Inning {
                 break;
             }
         }
-        System.out.println("Current Batsman: "+currBatsman);
+        System.out.println("Current Batsman: " + currBatsman);
     }
 
     public int getRun(Player player) {

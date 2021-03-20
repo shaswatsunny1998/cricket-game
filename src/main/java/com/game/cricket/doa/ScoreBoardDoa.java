@@ -1,8 +1,13 @@
 package com.game.cricket.doa;
 
+import org.springframework.stereotype.Repository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+
+
+@Repository
 public class ScoreBoardDoa {
     public void addScoreBoard(int matchId, String winningTeam, String losingTeam, int winScore, int loseScore, int wicketWin, int wicketLose, boolean draw) {
         try {

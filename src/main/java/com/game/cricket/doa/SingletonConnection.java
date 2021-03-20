@@ -19,12 +19,12 @@ public class SingletonConnection {
 
     @Value("${db.user}")
     public void setUser(String user){
-        dbUser =user;
+        SingletonConnection.dbUser =user;
     }
 
     @Value("${db.password}")
     public void setPassword(String password){
-        dbPassword=password;
+        SingletonConnection.dbPassword=password;
     }
 
     public Connection getConn() {
@@ -36,7 +36,7 @@ public class SingletonConnection {
             //TODO Without Component not working
             System.out.println(dbUser + " " + dbPassword);
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", dbUser, dbPassword);
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", SingletonConnection.dbUser, SingletonConnection.dbPassword);
         } catch (Exception e) {
             System.out.println(e);
         }

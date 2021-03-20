@@ -284,3 +284,27 @@ public void firstHalfMatch(Team batting_team, Team bowling_team,List<Over> first
 
 
 
+
+public void addBattingScores(){
+        BatScoreDoa doa = new BatScoreDoa();
+        doa.addBattingScores(this.match);
+    }
+
+    public void addBowlerScores(){
+        BallScoreDoa doa = new BallScoreDoa();
+        doa.addBowlingScores(this.match);
+    }
+    public void addOvers(){
+        OversDoa doa = new OversDoa();
+        doa.addOvers(this.match);
+    }
+
+    public void addWickets(){
+        WicketDoa doa =new WicketDoa();
+        doa.addWickets(this.match);
+    }
+
+    public void addBalls(){
+        BallsDoa doa = new BallsDoa();
+        doa.addBalls(this.match);
+    }

@@ -34,6 +34,34 @@ public class Score {
     public Score() {
     }
 
+    //Bowler Attribute Constructor
+    public Score(int wickets, int dotBalls, int oneRunBalls, int twoRunBalls, int threeRunBalls, int fourRunBalls, int sixRunBalls, int currBall) {
+        this.wickets = wickets;
+        this.dotBalls = dotBalls;
+        this.oneRunBalls = oneRunBalls;
+        this.twoRunBalls = twoRunBalls;
+        this.threeRunBalls = threeRunBalls;
+        this.fourRunBalls = fourRunBalls;
+        this.sixRunBalls = sixRunBalls;
+        this.currBall = currBall;
+    }
+
+
+
+
+    //Batting Attribute Constructor
+    public Score(int dotRun, int oneRun, int twoRun, int threeRun, int fourRun, int sixRun, int totalRun, boolean isOut, int strikeRate) {
+        this.dotRun = dotRun;
+        this.oneRun = oneRun;
+        this.twoRun = twoRun;
+        this.threeRun = threeRun;
+        this.fourRun = fourRun;
+        this.sixRun = sixRun;
+        this.totalRun = totalRun;
+        this.isOut = isOut;
+        this.strikeRate = strikeRate;
+    }
+
     public Score(int strikeRate) {
         this.strikeRate = strikeRate;
     }
@@ -85,11 +113,18 @@ public class Score {
                 this.getSixRunBalls()*6;
     }
     public double getOvers() {
-        int total_overs = getTotalBallsBowl() / 6;
+        /*int total_overs = getTotalBallsBowl() / 6;
         int rest_over = getTotalBallsBowl() % 6;
         // for 3 balls we are getting 0.30000004 , using Big Decimal will decrease efficiency . What to do?
         BigDecimal decimal = new BigDecimal(total_overs + 0.1 * rest_over).setScale(1, BigDecimal.ROUND_FLOOR);
         return decimal.doubleValue();
+
+         */
+
+        String total_overs = String.valueOf(Math.round(getTotalBallsBowl() / 6));
+        String rest_over=String.valueOf(getTotalBallsBowl()%6);
+        double numberOfOvers=Double.valueOf(total_overs+"."+rest_over);
+        return numberOfOvers;
     }
 
 

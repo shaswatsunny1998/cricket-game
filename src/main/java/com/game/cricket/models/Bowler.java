@@ -1,5 +1,6 @@
 package com.game.cricket.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.game.cricket.util.RandomGenerator;
 import com.game.cricket.util.Runs;
@@ -32,6 +33,8 @@ public class Bowler extends Player {
         return super.toString();
     }
 
+
+    @JsonIgnore
     public int getRun() {
         int index = randomGenerator.getRandomRun(list.size());
         int int_random = list.get(index).getRun();
