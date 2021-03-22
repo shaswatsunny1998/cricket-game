@@ -33,4 +33,5 @@ public class BattingController {
     public Map getStrikeRate(@PathVariable("matchId") int matchId, @PathVariable("playerId") int playerId) {
         return batsmanService.getStrikeRate(matchId,playerId);
     }
+    
 }

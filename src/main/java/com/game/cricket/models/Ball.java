@@ -8,6 +8,12 @@ public class Ball {
     public Ball() {
     }
 
+    public Ball(int run, int batsmanId, int bowlerId) {
+        this.run = run;
+        this.batsmanId = batsmanId;
+        this.bowlerId = bowlerId;
+    }
+
     public Ball(int run) {
         this.run = run;
     }

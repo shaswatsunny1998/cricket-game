@@ -1,12 +1,9 @@
 package com.game.cricket.models;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.List;
 
 
-@Component
 public class MatchScheduler {
     private int matchId;
     private String matchName;

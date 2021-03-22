@@ -15,15 +15,30 @@ public class PlayerService {
     @Autowired
     PlayersDoa playersDoa;
 
+    @Autowired
+    PlayerScoreService playerScoreService;
+
     public List<Player> getPlayers(List<Integer> playersId)
     {
         List<Player> players = new ArrayList<Player>();
         for(int i=0;i<playersId.size();++i)
         {
-            players.add(playersDoa.getPlayer(playersId.get(i)));
+            Player player = playersDoa.getPlayer(playersId.get(i));
+            players.add(player);
         }
         return players;
     }
+
+
+    public void setPlayersScore(List<Player> players,int matchId)
+    {
+        for (Player player:players) {
+            player.setScore(playerScoreService.mergeScores(matchId,player.getPlayerId()));
+        }
+
+    }
+
+
 
 
     public Player getPlayer(int playerId){

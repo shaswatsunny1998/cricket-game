@@ -62,6 +62,14 @@ public class Score {
         this.strikeRate = strikeRate;
     }
 
+
+
+
+
+
+
+
+
     public Score(int strikeRate) {
         this.strikeRate = strikeRate;
     }
@@ -304,5 +312,16 @@ public class Score {
                 ", sixRunBalls=" + sixRunBalls +
                 ", currBall=" + currBall +
                 '}';
+    }
+
+    public void setScores(Score bowlingScore){
+        this.wickets = bowlingScore.getWickets();
+        this.dotBalls= bowlingScore.getDotBalls();
+        this.oneRunBalls = bowlingScore.getOneRunBalls();
+        this.twoRunBalls = bowlingScore.getTwoRunBalls();
+        this.threeRunBalls= bowlingScore.getThreeRunBalls();
+        this.fourRunBalls = bowlingScore.getFourRunBalls();
+        this.sixRunBalls = bowlingScore.getSixRunBalls();
+        this.currBall = bowlingScore.getCurrBall();
     }
 }

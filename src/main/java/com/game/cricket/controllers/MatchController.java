@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
@@ -25,9 +26,8 @@ public class MatchController {
     @Autowired
     BowlerService bowlerService;
 
-
     @PostMapping("/schedule")
-    public Match getMatchTeams(@RequestBody MatchScheduler matchScheduler) {
+    public Match getMatchTeams(@Valid @RequestBody MatchScheduler matchScheduler) {
         Match match = matchService.addMatch(matchScheduler, matchScheduler.getTeamId1(),
                 matchScheduler.getPlayerIds1(), matchScheduler.getTeamId2(), matchScheduler.getPlayerIds2());
         matchTransporter.setMatch(match.getMatchId(), match);
@@ -49,5 +49,12 @@ public class MatchController {
     public Map getMatchTransporter() {
         return matchTransporter.getMatchMap();
     }
+
+    @GetMapping("/matchSummary/{matchId}")
+    public Map matchSummary(@PathVariable int matchId)
+    {
+        return matchService.getMatchSummary(matchId);
+    }
+
 
 }

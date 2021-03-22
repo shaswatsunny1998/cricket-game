@@ -27,20 +27,4 @@ public class TeamPlayerDoa {
         }
     }
 
-
-    public void addPlayer(int playerId,int teamId){
-        try {
-            Connection conn = SingletonConnection.getInstance().getConn();
-            String sql = "INSERT INTO `cricket`.`teamplayers` VALUES (?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, playerId);
-            pstmt.setInt(2, teamId);
-            pstmt.execute();
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
-
-    }
-
 }

@@ -99,30 +99,22 @@ public class PlayersDoa {
         return player;
     }
 
-    public List<Player> getPlayers(int teamId){
-        List<Player> players = new ArrayList<Player>();
-        Player player=null;
+    public List<Integer> getPlayers(int matchId, int teamId){
+        List<Integer> playersId = new ArrayList<Integer>();
         try {
             Connection conn = SingletonConnection.getInstance().getConn();
-            String sql = "SELECT * FROM cricket.players NATURAL JOIN cricket.teamplayers where teamplayers.teamid = ?";
+            String sql = "SELECT * FROM cricket.players NATURAL JOIN cricket.teamplayers where matchid = ? and teamplayers.teamid = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1,teamId);
+            pstmt.setInt(1,matchId);
+            pstmt.setInt(2,teamId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                if(rs.getString(5).equals("Batsman"))
-                {
-                    player = new Batsman(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
-                }
-                if (rs.getString(5).equals("Bowler"))
-                {
-                    player = new Bowler(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4));
-                }
-                players.add(player);
+                playersId.add(rs.getInt(1));
             }
         }
         catch (Exception e){
             System.out.println(e);
         }
-        return players;
+        return playersId;
     }
 }

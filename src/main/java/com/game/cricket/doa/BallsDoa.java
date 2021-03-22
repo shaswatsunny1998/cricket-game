@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class BallsDoa {
@@ -52,26 +55,43 @@ public class BallsDoa {
     }
 
 
-    public void addBall(int matchId,int overNo,boolean firstHalf,int ballNo , int run , int batsmanId, int bowlerId){
+    public void addBall(int matchId, int overNo, boolean firstHalf, int ballNo, int run, int batsmanId, int bowlerId) {
         Connection conn = SingletonConnection.getInstance().getConn();
         try {
 
             String sql = "INSERT INTO `cricket`.`balls` VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1,matchId);
-            pstmt.setInt(2,overNo);
-            pstmt.setBoolean(3,firstHalf);
-            pstmt.setInt(4,ballNo);
-            pstmt.setInt(5,run);
-            pstmt.setInt(6,batsmanId);
-            pstmt.setInt(7,bowlerId);
+            pstmt.setInt(1, matchId);
+            pstmt.setInt(2, overNo);
+            pstmt.setBoolean(3, firstHalf);
+            pstmt.setInt(4, ballNo);
+            pstmt.setInt(5, run);
+            pstmt.setInt(6, batsmanId);
+            pstmt.setInt(7, bowlerId);
             pstmt.execute();
-        }
-        catch (Exception e ){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
+
+    public List<Ball> getBalls(int matchId,boolean firstHalf) {
+        List<Ball> balls = new ArrayList<>();
+        Connection conn = SingletonConnection.getInstance().getConn();
+        try {
+            String sql = "SELECT * FROM cricket.balls where matchid=? and firsthalf = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, matchId);
+            pstmt.setBoolean(2, firstHalf);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                balls.add(new Ball(rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return balls;
+    }
 
 
 }
