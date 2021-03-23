@@ -1,6 +1,8 @@
 package com.game.cricket.models;
 
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -21,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Batsman.class, name = "Batsman"),
         @JsonSubTypes.Type(value = Bowler.class, name = "Bowler"),
 })
+//@JsonFilter("playerFilter")
 public abstract class Player {
     private int playerId;
     private String firstName;

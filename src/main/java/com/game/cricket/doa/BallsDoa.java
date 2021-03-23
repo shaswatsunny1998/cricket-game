@@ -94,4 +94,34 @@ public class BallsDoa {
     }
 
 
+    public List<Ball> getBallsPlayer(int matchId,int playerId ,boolean batsman)
+    {
+        List<Ball> balls = new ArrayList<>();
+        Connection conn = SingletonConnection.getInstance().getConn();
+        String sql="";
+        try {
+            if(batsman)
+            {
+                sql = "SELECT * FROM cricket.balls where matchid=? and batsmanid =?";
+            }
+            else
+            {
+                sql = "SELECT * FROM cricket.balls where matchid=? and bowlerid=?";
+            }
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,matchId);
+            pstmt.setInt(2,playerId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                balls.add(new Ball(rs.getInt(5), rs.getInt(6), rs.getInt(7)));
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+        return balls;
+    }
+
+
 }

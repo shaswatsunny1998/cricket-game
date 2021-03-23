@@ -2,12 +2,10 @@ package com.game.cricket.controllers;
 
 
 import com.game.cricket.doa.PlayersDoa;
-import com.game.cricket.doa.TeamPlayerDoa;
 import com.game.cricket.models.Player;
 import com.game.cricket.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,23 +26,27 @@ public class PlayerController {
         return playersDoa.getAllPlayers();
     }
 
-//    @GetMapping("/listPlayers/{teamId}")
-//    public List<Player> listPlayersByTeam(@PathVariable String teamId) {
-//        return playersDoa.getPlayers(Integer.parseInt(teamId));
-//    }
+    @GetMapping("/match/{matchId}")
+    public List<Player> listPlayerByMatch(@PathVariable("matchId") int matchId) {
+        return playerService.getPlayersByMatch(matchId);
+    }
+
+    @GetMapping("/{matchId}/team/{teamId}")
+    public List<Player> listPlayersByTeam(@PathVariable("matchId") int matchId, @PathVariable("teamId") int teamId) {
+        return playerService.getMatchTeamsPlayer(matchId, teamId);
+    }
 
 
     @PostMapping("/")
-    public Player addPlayer(@RequestBody Player player){
+    public Player addPlayer(@RequestBody Player player) {
         return playerService.addPlayer(player);
     }
 
 
+    // ResponseEntity<Player>
     @GetMapping("/{playerId}")
-    public ResponseEntity<Player> getPlayers(@PathVariable int playerId){
+    public MappingJacksonValue getPlayers(@PathVariable int playerId) {
         Player player = playerService.getPlayer(playerId);
-        if(player!=null)
-            return ResponseEntity.status(HttpStatus.OK).body(player);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return playerService.getMapping(player);
     }
 }

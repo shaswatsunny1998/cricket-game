@@ -117,4 +117,24 @@ public class PlayersDoa {
         }
         return playersId;
     }
+
+
+    public List<Integer> getPlayersByMatch(int matchId)
+    {
+        List<Integer> playersId = new ArrayList<Integer>();
+        try {
+            Connection conn = SingletonConnection.getInstance().getConn();
+            String sql = "SELECT * FROM cricket.players NATURAL JOIN cricket.teamplayers where matchid = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,matchId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                playersId.add(rs.getInt(1));
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        return playersId;
+    }
 }

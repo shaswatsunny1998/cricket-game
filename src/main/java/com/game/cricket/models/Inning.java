@@ -39,7 +39,6 @@ public class Inning {
         currBatsman++;
         Player running = batting_players.get(currBatsman);
         Player neutral;
-
         int currOver = 0;
 
         Over over = new Over();

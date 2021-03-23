@@ -101,29 +101,29 @@ public class FinalBoard {
     public void addScoreBoard(){
 
         boolean draw=false;
-        String winning ,losing;
+        int winning ,losing;
         int winWicket,loseWicket;
         int winScore,loseScore;
         if (secondTeam.getTotal_score() > firstTeam.getTotal_score()) {
 
-            winning=secondTeam.getTeamName();
-            losing=firstTeam.getTeamName();
+            winning=Integer.parseInt(secondTeam.getTeamId());
+            losing=Integer.parseInt(firstTeam.getTeamId());
             loseWicket =wicketsDownFirstTeam();
             winWicket = wicketsDownSecondTeam();
             winScore = getRunsBySecondTeam();
             loseScore= getRunsByFirstTeam();
 
         } else if(secondTeam.getTotal_score() < firstTeam.getTotal_score()){
-            losing=secondTeam.getTeamName();
-            winning=firstTeam.getTeamName();
+            winning=Integer.parseInt(firstTeam.getTeamId());
+            losing=Integer.parseInt(secondTeam.getTeamId());
             winWicket =wicketsDownFirstTeam();
             loseWicket = wicketsDownSecondTeam();
             loseScore = getRunsBySecondTeam();
             winScore= getRunsByFirstTeam();
         }
         else{
-            winning=secondTeam.getTeamName();
-            losing=firstTeam.getTeamName();
+            winning=Integer.parseInt(secondTeam.getTeamId());
+            losing=Integer.parseInt(firstTeam.getTeamId());
             draw=true;
             loseWicket =wicketsDownFirstTeam();
             winWicket = wicketsDownSecondTeam();

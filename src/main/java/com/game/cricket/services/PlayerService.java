@@ -1,10 +1,14 @@
 package com.game.cricket.services;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.game.cricket.doa.PlayersDoa;
 import com.game.cricket.models.Batsman;
 import com.game.cricket.models.Bowler;
 import com.game.cricket.models.Player;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,12 +34,45 @@ public class PlayerService {
     }
 
 
+    public List<Player> getMatchTeamsPlayer(int matchId,int teamId)
+    {
+        List<Integer> ids = playersDoa.getPlayers(matchId, teamId);
+        return getPlayers(ids);
+    }
+
+
+    public List<Player> getPlayersByMatch(int matchId)
+    {
+        List<Integer> ids = playersDoa.getPlayersByMatch(matchId);
+        return getPlayers(ids);
+    }
+
+
     public void setPlayersScore(List<Player> players,int matchId)
     {
         for (Player player:players) {
             player.setScore(playerScoreService.mergeScores(matchId,player.getPlayerId()));
         }
 
+    }
+
+    public List<Player> getPlayerDetails()
+    {
+         return playersDoa.getAllPlayers();
+    }
+
+
+
+    public MappingJacksonValue getMapping(Player player){
+        SimpleBeanPropertyFilter simpleBeanPropertyFilter =
+                SimpleBeanPropertyFilter.serializeAllExcept("score");
+
+        FilterProvider filterProvider = new SimpleFilterProvider()
+                .addFilter("playerFilter", simpleBeanPropertyFilter);
+
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(player);
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
     }
 
 

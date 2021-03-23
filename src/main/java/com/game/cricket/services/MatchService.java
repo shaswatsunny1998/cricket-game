@@ -48,6 +48,13 @@ public class MatchService {
     @Autowired
     BallsDoa ballsDoa;
 
+    @Autowired
+    WicketService wicketService;
+
+
+    @Autowired
+    ScoreBoardDoa scoreBoardDoa;
+
 
     public Match addMatch(MatchScheduler match, int teamId1, @NotEmpty List<Integer> playerId1, int teamId2, @NotEmpty List<Integer> playerId2) {
         Match match1 = new Match();
@@ -94,16 +101,20 @@ public class MatchService {
         playerService.setPlayersScore(team1.getPlayers(), matchId);
         playerService.setPlayersScore(team2.getPlayers(), matchId);
 
+        team1.setTotal_score(scoreBoardDoa.getScore(matchId, teamId1));
+        team2.setTotal_score(scoreBoardDoa.getScore(matchId, teamId2));
+
         match.setTeam1(team1);
         match.setTeam2(team2);
 
 
-        List<Ball> ballsFirsthalf = ballsDoa.getBalls(matchId,true);
-        List<Ball> ballsSecondhalf = ballsDoa.getBalls(matchId,false);
+        List<Ball> ballsFirsthalf = ballsDoa.getBalls(matchId, true);
+        List<Ball> ballsSecondhalf = ballsDoa.getBalls(matchId, false);
 
         matchSummary.put("matchSummary", match);
         matchSummary.put("firstHalf", ballsFirsthalf);
         matchSummary.put("secondHalf", ballsSecondhalf);
+        matchSummary.put("wickets", wicketService.getWicketDtos(matchId));
         return matchSummary;
     }
 

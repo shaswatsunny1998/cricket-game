@@ -1,6 +1,6 @@
 package com.game.cricket;
 
-import com.game.cricket.models.Inning;
+import com.game.cricket.models.ModifiedInning;
 import com.game.cricket.models.Over;
 import com.game.cricket.models.Team;
 
@@ -98,7 +98,8 @@ public class Match {
 
     public void start() {
         initializeOvers();
-        Inning inning = new Inning();
+        //Inning inning = new Inning();
+        ModifiedInning inning = new ModifiedInning();
         inning.singleInning(matchId, team1, team2, 0, this.firstHalfOvers, false);
         System.out.println("The Score to be chased: " + team1.getTotal_score());
         System.out.println(firstHalfOvers);

@@ -3,10 +3,14 @@ package com.game.cricket.doa;
 import com.game.cricket.Match;
 import com.game.cricket.models.Over;
 import com.game.cricket.models.Wicket;
+import com.game.cricket.models.WicketDto;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Repository
@@ -71,4 +75,31 @@ public class WicketDoa {
             System.out.println(e);
         }
     }
+
+    public List<WicketDto> getWicketsDto(int matchId,boolean firstHalf)
+    {
+        List<WicketDto> wicketDtos = new ArrayList<>();
+        Connection conn = SingletonConnection.getInstance().getConn();
+        try {
+
+            String sql = "SELECT * FROM cricket.wickets where matchid = ? and firsthalf = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,matchId);
+            pstmt.setBoolean(2,firstHalf);
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                wicketDtos.add(new WicketDto(rs.getInt(2),rs.getBoolean(3),
+                        new Wicket(rs.getInt(5),rs.getInt(6),rs.getInt(4))));
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e);
+        }
+
+        return wicketDtos;
+    }
+
+
+
 }
