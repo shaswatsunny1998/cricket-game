@@ -5,7 +5,8 @@ import com.game.cricket.doa.PlayersDoa;
 import com.game.cricket.models.Player;
 import com.game.cricket.services.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,8 +46,11 @@ public class PlayerController {
 
     // ResponseEntity<Player>
     @GetMapping("/{playerId}")
-    public MappingJacksonValue getPlayers(@PathVariable int playerId) {
+    public ResponseEntity<Player> getPlayers(@PathVariable int playerId) {
         Player player = playerService.getPlayer(playerId);
-        return playerService.getMapping(player);
+        if (player == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null).;
+        return ResponseEntity.status(HttpStatus.OK).body(player);
     }
 }

@@ -1,10 +1,7 @@
 package com.game.cricket.models;
 
 import com.game.cricket.Match;
-import com.game.cricket.doa.BallScoreDoa;
-import com.game.cricket.doa.BallsDoa;
-import com.game.cricket.doa.BatScoreDoa;
-import com.game.cricket.doa.WicketDoa;
+import com.game.cricket.doa.*;
 
 import java.util.List;
 
@@ -13,6 +10,7 @@ public class ModifiedInning {
     WicketDoa wicketDoa = new WicketDoa();
     BatScoreDoa batScoreDoa = new BatScoreDoa();
     BallScoreDoa ballScoreDoa = new BallScoreDoa();
+    TransactionDoa transactionDoa = new TransactionDoa();
     Player batting, running, neutral;
 
     BowlerSelector bowlerSelector;
@@ -26,7 +24,7 @@ public class ModifiedInning {
 
 
     //int matchId, int chaseScore,boolean isChasing,List<Over> overs
-    public void ballEvent(Player bowler , Over over,Team batting_team,int i,int matchId, int currOver , boolean isChasing) {
+    public void ballEvent(Player bowler, Over over, Team batting_team, int i, int matchId, int currOver, boolean isChasing) {
 
 
         int int_random = getRun(batting);
@@ -42,7 +40,7 @@ public class ModifiedInning {
         int totalScoreTeam = batting_team.getTotal_score();
 
 
-        ballsDoa.addBall(matchId, currOver + 1, !isChasing, i + 1, int_random, batting.getPlayerId(), bowler.getPlayerId());
+        //ballsDoa.addBall(matchId, currOver + 1, !isChasing, i + 1, int_random, batting.getPlayerId(), bowler.getPlayerId());
 
 
         if (int_random != -1) {
@@ -57,11 +55,14 @@ public class ModifiedInning {
             bowler.getScore().setCurrBall(bowler.getScore().getCurrBall() + 1);
 
 
-            //Bowler Score Added -
-            ballScoreDoa.addBowlingScore(matchId, bowler);
-
-            //Batting Score Added -
-            batScoreDoa.addBattingScore(matchId, batting);
+            transactionDoa.addWithoutWicket(matchId, currOver + 1, !isChasing, i + 1, int_random, batting.getPlayerId(),
+                    bowler.getPlayerId(), batting, bowler);
+//
+//            //Bowler Score Added -
+//            ballScoreDoa.addBowlingScore(matchId, bowler);
+//
+//            //Batting Score Added -
+//            batScoreDoa.addBattingScore(matchId, batting);
 
 
             if (int_random % 2 != 0) {
@@ -90,16 +91,19 @@ public class ModifiedInning {
             batting.getScore().setRun(0);
 
 
-            //Wickets Added
-            wicketDoa.addWicket(matchId, currOver + 1, !isChasing, i + 1, batting.getPlayerId(), bowler.getPlayerId());
+            transactionDoa.addWithWicket(matchId, currOver + 1, !isChasing, i + 1, int_random, batting.getPlayerId(),
+                    bowler.getPlayerId(), batting, bowler);
 
-
-            //Bowler Score Added -
-            ballScoreDoa.addBowlingScore(matchId, bowler);
-
-            //BatScore Added - (Corner case , if the batsman scored 0 run).
-            batScoreDoa.addBattingScore(matchId, batting);
-
+//
+//            //Wickets Added
+//            wicketDoa.addWicket(matchId, currOver + 1, !isChasing, i + 1, batting.getPlayerId(), bowler.getPlayerId());
+//
+//
+//            //Bowler Score Added -
+//            ballScoreDoa.addBowlingScore(matchId, bowler);
+//
+//            //BatScore Added - (Corner case , if the batsman scored 0 run).
+//            batScoreDoa.addBattingScore(matchId, batting);
 
 
             over.setWicket(over.getWicket() + 1);
@@ -112,12 +116,6 @@ public class ModifiedInning {
 
         }
     }
-
-
-
-
-
-
 
 
     public void singleInning(int matchId, Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
@@ -149,8 +147,10 @@ public class ModifiedInning {
                 over = new Over();
             }
 
+            //Give use control
+
             for (int i = bowler.getScore().getCurrBall(); i < Over.NUM_OF_BALLS; ++i) {
-                ballEvent(bowler,over,batting_team,i,matchId,currOver,isChasing);
+                ballEvent(bowler, over, batting_team, i, matchId, currOver, isChasing);
 
                 if (isChasing) {
                     if (batting_team.getTotal_score() > chaseScore) {
@@ -160,8 +160,7 @@ public class ModifiedInning {
                         return;
                     }
                 }
-                if(batting.getScore().isOut())
-                {
+                if (batting.getScore().isOut()) {
                     currBatsman++;
                     if (!batting_team.isLastPlayer(currBatsman)) {
                         batting = batting_players.get(currBatsman);

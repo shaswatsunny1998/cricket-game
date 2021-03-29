@@ -81,6 +81,7 @@ public class PlayersDoa {
     }
 
     public Player addPlayer(Player player){
+        Player player1 = null;
         try {
             Connection conn = SingletonConnection.getInstance().getConn();
             String sql = "INSERT into cricket.players VALUES (?,?,?,?,?)";
@@ -91,12 +92,13 @@ public class PlayersDoa {
             pstmt.setInt(4, player.getAge());
             pstmt.setString(5, player.getType());
             pstmt.execute();
+            player1=player;
         }
         catch (Exception e)
         {
             System.out.println(e);
         }
-        return player;
+        return player1;
     }
 
     public List<Integer> getPlayers(int matchId, int teamId){

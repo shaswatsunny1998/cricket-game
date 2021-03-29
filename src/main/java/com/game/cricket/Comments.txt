@@ -308,3 +308,40 @@ public void addBattingScores(){
         BallsDoa doa = new BallsDoa();
         doa.addBalls(this.match);
     }
+
+
+    try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/cricket?autoReconnect=true&useSSL=false", "root", "12345678");
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+
+            try {
+                conn.setAutoCommit(false);
+                String sql = "INSERT INTO `cricket`.`overs` (`overno`, `firsthalf`) VALUES (?,?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1,9);
+                pstmt.setBoolean(2,false);
+                pstmt.execute();
+
+                pstmt.setInt(1,8);
+                pstmt.setBoolean(2,false);
+                pstmt.execute();
+
+                conn.commit();
+                conn.setAutoCommit(true);
+            } catch (Exception e) {
+                try {
+                    conn.rollback();
+                    conn.setAutoCommit(true);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                System.out.println("Roll Back Happened");
+                System.out.println(e);
+            }
+
+        }

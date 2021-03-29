@@ -48,4 +48,22 @@ public class MatchDoa {
         }
         return match;
     }
+
+
+    public boolean isPresentMatch(int matchId){
+        try {
+            Connection conn = SingletonConnection.getInstance().getConn();
+            String sql = "Select * from `cricket`.`match` where matchid=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, matchId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next() == false) {
+                return false;
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return true;
+    }
 }

@@ -24,28 +24,28 @@ public class TeamController {
     TeamService teamService;
 
 
-    @GetMapping("/listTeams")
+    @GetMapping("/")
     public List<Team> listTeams() {
         return teamDoa.getTeams();
     }
 
-    @PostMapping("/registerTeam")
+    @PostMapping("/")
     public void addTeam(@RequestBody Team team) {
         teamDoa.addTeam(team);
     }
 
-    @DeleteMapping("/deleteTeam/{teamId}")
+    @DeleteMapping("/{teamId}")
     public void deleteTeam(@PathVariable String teamId) {
         teamDoa.deleteTeam(teamId);
     }
 
-    @PutMapping("/updateTeam/{teamId}")
+    @PutMapping("/{teamId}")
     public void updateTeamName(@PathVariable String teamId, @RequestBody Team team) {
         teamDoa.updateTeam(team, teamId);
     }
 
-    @GetMapping("/{teamId}/{playerids}")
-    public Team getTeam(@PathVariable int teamId, @PathVariable List<Integer> playerids) {
-        return teamService.getFullTeam(teamId,playerids);
+    @GetMapping("/{teamId}")
+    public Team getTeam(@PathVariable int teamId) {
+        return teamDoa.getTeam(teamId);
     }
 }

@@ -2,6 +2,7 @@ package com.game.cricket.controllers;
 
 import com.game.cricket.Match;
 import com.game.cricket.MatchTransporter;
+import com.game.cricket.exceptions.MatchIdException;
 import com.game.cricket.models.MatchScheduler;
 import com.game.cricket.services.BowlerService;
 import com.game.cricket.services.MatchService;
@@ -30,6 +31,8 @@ public class MatchController {
     public Match getMatchTeams(@Valid @RequestBody MatchScheduler matchScheduler) {
         Match match = matchService.addMatch(matchScheduler, matchScheduler.getTeamId1(),
                 matchScheduler.getPlayerIds1(), matchScheduler.getTeamId2(), matchScheduler.getPlayerIds2());
+        if(match==null)
+            return null;
         matchTransporter.setMatch(match.getMatchId(), match);
         return matchTransporter.getMatch(matchScheduler.getMatchId());
     }
@@ -51,8 +54,7 @@ public class MatchController {
     }
 
     @GetMapping("/matchSummary/{matchId}")
-    public Map matchSummary(@PathVariable int matchId)
-    {
+    public Map matchSummary(@PathVariable int matchId) throws MatchIdException {
         return matchService.getMatchSummary(matchId);
     }
 

@@ -28,6 +28,8 @@ public class PlayerService {
         for(int i=0;i<playersId.size();++i)
         {
             Player player = playersDoa.getPlayer(playersId.get(i));
+            if(player ==null)
+                continue;
             players.add(player);
         }
         return players;
