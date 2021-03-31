@@ -3,6 +3,7 @@ package com.game.cricket;
 import com.game.cricket.models.ModifiedInning;
 import com.game.cricket.models.Over;
 import com.game.cricket.models.Team;
+import com.game.cricket.models.UserControlInning;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +27,12 @@ public class Match {
     private List<Over> secondHalfOvers;
 
     private final int BALLS_IN_A_OVER = 6;
+
+
+    private UserControlInning firstHalfInning;
+    private UserControlInning secondHalfInning;
+
+    private boolean isFinished = false;
 
     public Match() {
     }
@@ -64,46 +71,24 @@ public class Match {
         this.secondHalfOvers = secondHalfOvers;
     }
 
-/*
-    public void addAllTeams(Scanner scan) {
-        addFirstTeam(scan);
-        addSecondTeam(scan);
-    }
-
-
-    public void addFirstTeam(Scanner scan) {
-
-        Team team = new Team("123", "India");
-        team.setPlayers(Arrays.asList(
-                new Bowler("Shaswat", "Srivastava", 22),
-                new Batsman("Virat", "Kohli", 34),
-                new Bowler("Dhoni", "Singh", 45)
-        ));
-        this.team1 = team;
-    }
-
-    public void addSecondTeam(Scanner scan) {
-
-        Team team = new Team("345", "Australia");
-        team.setPlayers(Arrays.asList(
-                new Bowler("ss", "ww", 45),
-                new Bowler("Vir", "ran", 34),
-                new Batsman("Tiger", "Wicked", 23)
-        ));
-        this.team2 = team;
-    }
-
- */
-
-
     public void start() {
         initializeOvers();
-        //Inning inning = new Inning();
+        startFirstHalf();
+        startSecondHalf();
+    }
+
+    public void startFirstHalf(){
+        initializeOvers();
         ModifiedInning inning = new ModifiedInning();
         inning.singleInning(matchId, team1, team2, 0, this.firstHalfOvers, false);
         System.out.println("The Score to be chased: " + team1.getTotal_score());
         System.out.println(firstHalfOvers);
         System.out.println("--------------------------------");
+    }
+
+
+    public void startSecondHalf(){
+        ModifiedInning inning = new ModifiedInning();
         inning.singleInning(matchId, team2, team1, team1.getTotal_score(), this.secondHalfOvers, true);
         System.out.println("Score by Team 2: " + team2.getTotal_score());
         System.out.println(secondHalfOvers);
@@ -155,6 +140,31 @@ public class Match {
 
     public void setTeam2(Team team2) {
         this.team2 = team2;
+    }
+
+
+    public UserControlInning getFirstHalfInning() {
+        return firstHalfInning;
+    }
+
+    public UserControlInning getSecondHalfInning() {
+        return secondHalfInning;
+    }
+
+    public void setFirstHalfInning(UserControlInning firstHalfInning) {
+        this.firstHalfInning = firstHalfInning;
+    }
+
+    public void setSecondHalfInning(UserControlInning secondHalfInning) {
+        this.secondHalfInning = secondHalfInning;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
     @Override

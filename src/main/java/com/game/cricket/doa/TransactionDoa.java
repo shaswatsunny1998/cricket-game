@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class TransactionDoa {
     public void addWithoutWicket(int matchId, int overNo, boolean firstHalf, int ballNo, int run, int batsmanId, int bowlerId, Player batsman, Player bowler) {
-        Connection conn = SingletonConnection.getInstance().getConn();
+        Connection conn = SingletonManualCommit.getInstance().getConn();
         try {
             conn.setAutoCommit(false);
 
@@ -59,12 +59,9 @@ public class TransactionDoa {
 //                System.out.println("Roll Back Happened");
 //            }
             conn.commit();
-            conn.setAutoCommit(true);
-
         } catch (Exception e) {
             try {
                 conn.rollback();
-                conn.setAutoCommit(true);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -75,7 +72,7 @@ public class TransactionDoa {
     }
 
     public void addWithWicket(int matchId, int overNo, boolean firstHalf, int ballNo, int run, int batsmanId, int bowlerId, Player batsman, Player bowler) {
-        Connection conn = SingletonConnection.getInstance().getConn();
+        Connection conn = SingletonManualCommit.getInstance().getConn();
         try {
             conn.setAutoCommit(false);
 
@@ -134,12 +131,10 @@ public class TransactionDoa {
 
 
             conn.commit();
-            conn.setAutoCommit(true);
 
         } catch (Exception e) {
             try {
                 conn.rollback();
-                conn.setAutoCommit(true);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }

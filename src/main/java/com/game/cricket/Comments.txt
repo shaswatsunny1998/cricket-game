@@ -345,3 +345,20 @@ public void addBattingScores(){
             }
 
         }
+
+
+
+//    public UserControlInning setFirstHalfOver(int matchId)
+//    {
+//        try {
+//            Match match = MatchTransporter.getMatch(matchId);
+//            if (match == null)
+//                throw new MatchIdException("Match not Scheduled with matchId: " + matchId);
+//            match.initializeOvers();
+//            match.setFirstHalfInning(new UserControlInning(match.getTeam1(),match.getTeam2()));
+//            return match.getFirstHalfInning();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        return null;
+//    }

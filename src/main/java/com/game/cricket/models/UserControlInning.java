@@ -5,10 +5,8 @@ import com.game.cricket.doa.*;
 
 import java.util.List;
 
-public class ModifiedInning {
-    BallsDoa ballsDoa = new BallsDoa();
-    WicketDoa wicketDoa = new WicketDoa();
-    BatScoreDoa batScoreDoa = new BatScoreDoa();
+public class UserControlInning {
+
     BallScoreDoa ballScoreDoa = new BallScoreDoa();
     TransactionDoa transactionDoa = new TransactionDoa();
     Player batting, running, neutral;
@@ -16,18 +14,36 @@ public class ModifiedInning {
     BowlerSelector bowlerSelector;
     BatsmanSelector batsmanSelector;
 
-    public ModifiedInning() {
+    int currBatsman = 0;
+    int currOver = 0;
 
+    Team batting_team;
+
+    List<Player> batting_players;
+    List<Player> bowling_players;
+
+    public UserControlInning(Team batting_team,Team bowling_team) {
         bowlerSelector = new BowlerSelector();
         batsmanSelector = new BatsmanSelector();
+
+        this.batting_team = batting_team;
+
+        batting_players = batsmanSelector.getBattingPlayers(batting_team.getPlayers());
+        bowling_players = bowlerSelector.getBowlingPlayers(bowling_team.getPlayers());
+
+        batting = batting_players.get(currBatsman);
+        currBatsman++;
+        running = batting_players.get(currBatsman);
+
+
+        System.out.println("Batting Players: "+batting_players);
+        System.out.println("Bowling Players: "+bowling_players);
+
     }
 
+    public void ballEvent(Player bowler, Over over, int i, int matchId, boolean isChasing,int run) {
 
-    //int matchId, int chaseScore,boolean isChasing,List<Over> overs
-    public void ballEvent(Player bowler, Over over, Team batting_team, int i, int matchId, int currOver, boolean isChasing) {
-
-
-        int int_random = getRun(batting);
+        int int_random = run;
 
         Ball ball = new Ball(int_random);
 
@@ -94,29 +110,16 @@ public class ModifiedInning {
         }
     }
 
-
-    public void singleInning(int matchId, Team batting_team, Team bowling_team, int chaseScore, List<Over> overs, boolean isChasing) {
-
-        int currBatsman = 0;
-        int currBowler = 0;
-        int currOver = 0;
-
-
-        List<Player> batting_players = batsmanSelector.getBattingPlayers(batting_team.getPlayers());
-        List<Player> bowling_players = bowlerSelector.getBowlingPlayers(bowling_team.getPlayers());
-
-        batting = batting_players.get(currBatsman);
-        currBatsman++;
-        running = batting_players.get(currBatsman);
-
-        Over over = new Over();
+    public void singleOver(int matchId,int bowlerIndex, Over over, List<Over> overs , boolean isChasing, int chaseScore,
+                           List<Integer> runs){
 
         while (currBatsman <= Team.TEAM_SIZE - 1 && currOver < Match.NUM_OF_OVERS) {
             System.out.println("Initial On Batting Side : " + batting.getFirstName());
             System.out.println("Initial On Running Side : " + running.getFirstName());
 
+            Player bowler = bowling_players.get(bowlerIndex);
 
-            Player bowler = bowling_players.get(currBowler);
+
             System.out.println("Bowler Bowling: " + bowler.getFirstName());
             if (over.getCurrBall() < Over.NUM_OF_BALLS) {
 
@@ -127,7 +130,7 @@ public class ModifiedInning {
             //Give use control
 
             for (int i = bowler.getScore().getCurrBall(); i < Over.NUM_OF_BALLS; ++i) {
-                ballEvent(bowler, over, batting_team, i, matchId, currOver, isChasing);
+                ballEvent(bowler, over, i, matchId, isChasing,runs.get(i));
 
                 if (isChasing) {
                     if (batting_team.getTotal_score() > chaseScore) {
@@ -164,37 +167,49 @@ public class ModifiedInning {
 
                 ballScoreDoa.addBowlingScore(matchId, bowler);
 
-                currBowler++;
-
-                currBowler = bowlerSelector.getValidBowler(bowling_players, currBowler);
-
                 neutral = batting;
                 batting = running;
                 running = neutral;
 
                 currOver++;
+                return;
 
             }
             if (currBatsman > Team.TEAM_SIZE - 1) {
                 over.setTotalRun();
                 over.setPlayerId(bowler.getPlayerId());
                 overs.add(over);
-                break;
+                return;
             }
         }
-        System.out.println("Current Batsman: " + currBatsman);
     }
 
-    public int getRun(Player player) {
-        int run = 0;
-        if (player instanceof Batsman) {
-            Batsman batsman = (Batsman) player;
-            run = batsman.getRun();
-        } else {
-            Bowler bowler = (Bowler) player;
-            run = bowler.getRun();
-        }
-        return run;
+    public Over singleInningOver(int matchId,int bowlerIndex, List<Over> overs , boolean isChasing, int chaseScore,
+                                 List<Integer> runs)
+    {
+        Over over = new Over();
+        singleOver(matchId,bowlerIndex,over,overs,isChasing,chaseScore,runs);
+        return over;
     }
 
+
+    public int getCurrBatsman() {
+        return currBatsman;
+    }
+
+    public int getCurrOver() {
+        return currOver;
+    }
+
+    public Team getBatting_team() {
+        return batting_team;
+    }
+
+    public List<Player> getBatting_players() {
+        return batting_players;
+    }
+
+    public List<Player> getBowling_players() {
+        return bowling_players;
+    }
 }

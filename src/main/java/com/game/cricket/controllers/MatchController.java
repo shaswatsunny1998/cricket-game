@@ -4,6 +4,9 @@ import com.game.cricket.Match;
 import com.game.cricket.MatchTransporter;
 import com.game.cricket.exceptions.MatchIdException;
 import com.game.cricket.models.MatchScheduler;
+import com.game.cricket.models.Over;
+import com.game.cricket.models.RunsDto;
+import com.game.cricket.models.UserControlInning;
 import com.game.cricket.services.BowlerService;
 import com.game.cricket.services.MatchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,7 @@ public class MatchController {
     public Match getMatchTeams(@Valid @RequestBody MatchScheduler matchScheduler) {
         Match match = matchService.addMatch(matchScheduler, matchScheduler.getTeamId1(),
                 matchScheduler.getPlayerIds1(), matchScheduler.getTeamId2(), matchScheduler.getPlayerIds2());
-        if(match==null)
+        if (match == null)
             return null;
         matchTransporter.setMatch(match.getMatchId(), match);
         return matchTransporter.getMatch(matchScheduler.getMatchId());
@@ -48,6 +51,16 @@ public class MatchController {
         return matchService.startMatch(matchId);
     }
 
+    @GetMapping("/start/firstHalf/{matchId}")
+    public Match startFirstHalf(@PathVariable int matchId) {
+        return matchService.startFirstHalf(matchId);
+    }
+
+    @GetMapping("/start/secondHalf/{matchId}")
+    public Match startsecondHalf(@PathVariable int matchId) {
+        return matchService.startSecondHalf(matchId);
+    }
+
     @GetMapping("/matchTransporter")
     public Map getMatchTransporter() {
         return matchTransporter.getMatchMap();
@@ -58,5 +71,26 @@ public class MatchController {
         return matchService.getMatchSummary(matchId);
     }
 
+    @PostMapping("/{matchId}/nextOverFirst/{bowlerId}")
+    public Over getNextOver(@PathVariable("matchId") int matchId, @PathVariable("bowlerId") int bowlerId,
+                            @RequestBody RunsDto runsDto) {
+        return matchService.firstHalfOvers(matchId, bowlerId, runsDto.getRuns());
+    }
+
+    @PostMapping("/{matchId}/nextOverSecond/{bowlerId}")
+    public Over getNextOverSecond(@PathVariable("matchId") int matchId, @PathVariable("bowlerId") int bowlerId,
+                            @RequestBody RunsDto runsDto) {
+        return matchService.secondHalfOvers(matchId, bowlerId, runsDto.getRuns());
+    }
+
+    @GetMapping("{matchId}/firstHalfInning")
+    public UserControlInning getInning(@PathVariable int matchId) {
+        return matchService.getFirstHalfOver(matchId);
+    }
+
+    @GetMapping("{matchId}/secondHalfInning")
+    public UserControlInning getSecondInning(@PathVariable int matchId) {
+        return matchService.getSecondHalfOver(matchId);
+    }
 
 }
